@@ -40,10 +40,12 @@ test("confirmed primitive catalog includes standard, compact, and micro slider s
 });
 
 
-test("double-split slider keeps primary rails and a secondary center track without crossing rail bounds", () => {
+test("double-split slider keeps secondary rails, a primary center, and inset progress", () => {
   assert.match(styles, /\.vt-studio-double-split-slider \.vt-studio-double-split-slider__rail\s*\{[^}]*background:\s*var\(--vt-studio-control-primary/s);
   assert.match(styles, /\.vt-studio-double-split-slider > \[data-vt-studio-split-field\]\s*\{[^}]*background:\s*var\(--vt-studio-control-secondary/s);
-  assert.match(styles, /\.vt-studio-double-split-slider > \[data-vt-studio-split-field\]\s*\{[^}]*overflow:\s*hidden/s);
+  assert.match(styles, /\.vt-studio-double-split-slider > \[data-vt-studio-split-field\]\s*\{[^}]*padding-inline:\s*max\(/s);
+  assert.match(styles, /--vt-studio-slider-left-fill:\s*var\(--vt-studio-control-secondary/);
+  assert.match(styles, /color-mix\(in srgb, var\(--vt-studio-slider-left-fill\) 50%, transparent\)/);
   assert.match(styles, /\.vt-studio-double-split-slider input\[type="range"\]::-webkit-slider-thumb\s*\{[^}]*transform:\s*translateY\(/s);
   assert.match(styles, /\.vt-studio-double-split-slider input\[type="range"\]\s*\{[^}]*box-sizing:\s*border-box/s);
 });
