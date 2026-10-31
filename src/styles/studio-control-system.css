@@ -3915,7 +3915,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
 .vt-studio-double-split-slider input[type="range"]::-moz-range-progress {
   height: var(--vt-studio-slider-track-height);
   border-radius: var(--vt-studio-slider-radius);
-  background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6));
+  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
 }
 .vt-studio-double-split-slider input[type="range"]::-moz-range-thumb {
   box-sizing: border-box;
