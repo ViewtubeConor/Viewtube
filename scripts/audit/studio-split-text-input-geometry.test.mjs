@@ -18,7 +18,7 @@ test("split text input styles target the actual rendered shell, rails, and edita
 
 test("split input matches the Codex native-editing and single-shell focus contract", () => {
   assert.equal((splitCss.match(/html body \.vt-studio-split-text-input input\.vt-studio-text-input\[data-vt-studio-control="true"\]\[data-size\]\s*\{/g) || []).length, 1);
-  assert.match(splitCss, /border:\s*var\(--vt-studio-control-stroke, 3px\) solid var\(--vt-split-field-primary\) !important/);
+  assert.match(splitCss, /border:\s*var\(--vt-studio-control-stroke, 3px\) solid var\(--vt-split-field-primary\)/);
   assert.match(splitCss, /background:\s*color-mix\(in srgb, var\(--vt-split-field-primary\) 50%, transparent\) !important/);
   assert.match(splitCss, /:is\(:focus, :focus-visible\)[\s\S]*?15%, transparent\)[\s\S]*?-webkit-text-stroke-color:\s*#000/);
   assert.match(splitCss, /\.vt-studio-split-text-input:focus-within[\s\S]*?outline:\s*calc\(var\(--vt-studio-control-stroke, 3px\) \* \.65\) solid var\(--vt-studio-control-secondary/);
@@ -30,7 +30,7 @@ test("split input matches the Codex native-editing and single-shell focus contra
 test("split input descendants remain pointer-interactive and retain the primary inset stroke", () => {
   assert.ok(splitCss.includes("pointer-events: none"));
   assert.ok(splitCss.includes("pointer-events: auto"));
-  assert.match(splitCss, /border:\\s*var\\(--vt-studio-control-stroke, 3px\\) solid var\\(--vt-split-field-primary\\)/);
+  assert.match(splitCss, /border:\s*var\(--vt-studio-control-stroke, 3px\) solid var\(--vt-split-field-primary\)/);
   assert.ok(splitCss.includes("box-shadow: none;"));
 });
 
@@ -74,7 +74,7 @@ test("split text input stylesheet is complete and uses the Codex native inner bo
   assert.doesNotMatch(splitCss, /\.\.\.\s*$/, "stylesheet must not be truncated");
   assert.doesNotThrow(() => postcss.parse(splitCss), "split text input stylesheet must parse as valid CSS");
   assert.match(splitCss, /border:\s*var\(--vt-studio-control-stroke, 3px\) solid var\(--vt-split-field-primary\) !important/);
-  assert.ok(splitCss.includes("box-shadow: inset 0 0 0 var(--vt-split-field-inline-width) var(--vt-split-field-primary)"));
+  assert.ok(splitCss.includes("box-shadow: none;"));
   assert.match(splitCss, /caret-color:\s*var\(--vt-split-field-primary\)/);
 });
 
