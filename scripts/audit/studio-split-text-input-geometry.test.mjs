@@ -30,8 +30,8 @@ test("split input matches the Codex native-editing and single-shell focus contra
 test("split input descendants remain pointer-interactive and retain the primary inset stroke", () => {
   assert.ok(splitCss.includes("pointer-events: none"));
   assert.ok(splitCss.includes("pointer-events: auto"));
-  assert.ok(splitCss.includes("--vt-split-field-inline-width: var(--vt-studio-control-stroke, 3px)"));
-  assert.ok(splitCss.includes("box-shadow: inset 0 0 0 var(--vt-split-field-inline-width) var(--vt-split-field-primary)"));
+  assert.match(splitCss, /border:\\s*var\\(--vt-studio-control-stroke, 3px\\) solid var\\(--vt-split-field-primary\\)/);
+  assert.ok(splitCss.includes("box-shadow: none;"));
 });
 
 test("all editable fields receive a primary inset stroke and textarea focus outline", () => {
