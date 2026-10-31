@@ -5,6 +5,7 @@ import test from "node:test";
 const toggles = readFileSync("src/styles/studio-control-value-toggles.css", "utf8");
 const splitInput = readFileSync("src/studio-ui/primitives/studio-split-text-input.css", "utf8");
 const controls = readFileSync("src/styles/studio-control-system.css", "utf8");
+const splitStyles = readFileSync("src/styles/studio-control-split.css", "utf8");
 
 test("focus outline and character fades share one duration and easing in both directions", () => {
   const duration = "var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out";
@@ -28,6 +29,10 @@ test("split text input uses a full primary inner border at every supported size,
   assert.match(splitInput, /:is\(:focus, :focus-visible\)[\s\S]*?border:\s*var\(--vt-studio-control-stroke, 3px\) solid var\(--vt-split-field-primary\)/);
   assert.doesNotMatch(splitInput, /border:\s*0 !important/);
   assert.match(splitInput, /data-size/);
+});
+
+test("slider track has explicit clearance from both vertical dividers", () => {
+  assert.ok(splitStyles.includes("padding-inline: calc(var(--vt-studio-control-stroke, 3px) * 2)"));
 });
 
 test("slider split rails are secondary, center is primary, and progress uses full/half secondary fills", () => {
