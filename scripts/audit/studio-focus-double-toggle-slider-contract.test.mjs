@@ -37,3 +37,22 @@ test("slider split rails are secondary, center is primary, and progress uses ful
   assert.match(controls, /color-mix\(in srgb, var\(--vt-studio-slider-left-fill\) 50%, transparent\)/);
   assert.match(controls, /padding-inline:\s*max\(/);
 });
+
+
+test("textareas expose the primary 15% focus fill with the shared 500ms transition", () => {
+  assert.ok(controls.includes('background-color: var(--vt-field-fill-focus'));
+  assert.ok(controls.includes('background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out'));
+  assert.ok(controls.includes('-webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out'));
+});
+
+test("text boxes use a primary inline stroke with no shadow geometry", () => {
+  assert.ok(controls.includes('.vt-studio-text-box[data-vt-studio-control="true"]::after'));
+  assert.ok(controls.includes('border: var(--vt-studio-control-stroke, 3px) solid var(--vt-field-primary'));
+  assert.ok(controls.includes('.vt-studio-text-box[data-vt-studio-control="true"] {\n  box-shadow: none;'));
+});
+
+test("split text input preserves primary top and bottom strokes", () => {
+  assert.ok(splitInput.includes('border-top: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary'));
+  assert.ok(splitInput.includes('border-bottom: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary'));
+});
+
