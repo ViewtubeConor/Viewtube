@@ -184,3 +184,16 @@ html body .vt-studio-split-text-input [data-vt-studio-split-field]::after {
 /* All split directions share the same square rail tracks. The divider is
  * drawn inside the rail; it must not be added to the rail's track width.
  */
+
+
+/* Preserve the primary inner stroke on all four edges for standard and compact. */
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"],
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size] {
+  border-top: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a)));
+  border-bottom: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a)));
+}
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size]:is(:focus, :focus-visible) {
+  border-top-color: var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a)));
+  border-bottom-color: var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a)));
+}
