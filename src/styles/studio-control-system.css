@@ -6387,3 +6387,38 @@ button[data-vt-studio-play-pause="true"][aria-pressed="true"] [data-vt-studio-sp
 .vt-studio-split-right-badge > .vt-studio-split-right-badge__rail,
 .vt-studio-double-split-badge > .vt-studio-double-split-badge__rail:last-child { margin-left: auto; }
 
+
+
+/* Field-state finalization: the focus fill, glyphs and perimeter share the
+   master 500ms fade token. The explicit background-color rule wins over
+   downstream textarea surface declarations without changing resting fill. */
+html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"]:is(:focus, :focus-visible) {
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--pair-a)) 15%, transparent));
+  color: #000;
+  -webkit-text-fill-color: #000;
+  -webkit-text-stroke-color: #000;
+  transition:
+    background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-fill-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    outline-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    outline-width var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
+}
+
+/* A text box keeps its black outer border and secondary outer outline. Its
+   primary inline stroke is a real inset border, not a shadow layer. */
+.vt-studio-text-box[data-vt-studio-control="true"] {
+  box-shadow: none;
+  position: relative;
+  isolation: isolate;
+}
+.vt-studio-text-box[data-vt-studio-control="true"]::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: var(--vt-studio-control-stroke, 3px);
+  border: var(--vt-studio-control-stroke, 3px) solid var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)));
+  border-radius: max(0px, calc(var(--vt-studio-control-radius, 6px) - var(--vt-studio-control-stroke, 3px)));
+  pointer-events: none;
+}
