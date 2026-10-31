@@ -41,8 +41,8 @@ test("confirmed primitive catalog includes standard, compact, and micro slider s
 
 
 test("double-split slider keeps secondary rails, a primary center, and inset progress", () => {
-  assert.match(styles, /\.vt-studio-double-split-slider \.vt-studio-double-split-slider__rail\s*\{[^}]*background:\s*var\(--vt-studio-control-secondary/s);
-  assert.match(styles, /\.vt-studio-double-split-slider > \[data-vt-studio-split-field\]\s*\{[^}]*background:\s*var\(--vt-studio-control-primary/s);
+  assert.match(styles, /\.vt-studio-double-split-slider \.vt-studio-double-split-slider__rail\s*\{[^}]*background:\s*var\(--vt-studio-control-primary/s);
+  assert.match(styles, /\.vt-studio-double-split-slider > \[data-vt-studio-split-field\]\s*\{[^}]*background:\s*var\(--vt-studio-control-secondary/s);
   assert.match(styles, /\.vt-studio-double-split-slider > \[data-vt-studio-split-field\]\s*\{[^}]*padding-inline:\s*max\(/s);
   assert.match(styles, /--vt-studio-slider-left-fill:\s*var\(--vt-studio-control-secondary/);
   assert.match(styles, /color-mix\(in srgb, var\(--vt-studio-slider-left-fill\) 50%, transparent\)/);
