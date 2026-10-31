@@ -129,10 +129,10 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
   margin: 0;
   padding: 0 var(--vt-split-field-pad);
   pointer-events: auto;
-  border: 0 !important;
+  border: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary);
   border-radius: inherit;
   outline: none;
-  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary);
+  box-shadow: none;
   background: color-mix(in srgb, var(--vt-split-field-primary) 50%, transparent);
   background-clip: padding-box;
   color: var(--vt-split-field-primary);
@@ -152,9 +152,9 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
 
 html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"]:is(:focus, :focus-visible),
 html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size]:is(:focus, :focus-visible) {
-  border: 0 !important;
+  border: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary);
   outline: none;
-  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary);
+  box-shadow: none;
   background: color-mix(in srgb, var(--vt-split-field-primary) 15%, transparent);
   color: #000;
   -webkit-text-fill-color: #000;
