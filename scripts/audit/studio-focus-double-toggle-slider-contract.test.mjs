@@ -32,8 +32,8 @@ test("split text input uses a full primary inner border at every supported size,
   assert.match(splitInput, /data-size/);
 });
 
-test("slider track has explicit clearance from both vertical dividers", () => {
-  assert.ok(splitStyles.includes("padding-inline: calc(var(--vt-studio-control-stroke, 3px) * 2)"));
+test("slider track has tier-aware clearance from both vertical dividers", () => {
+  assert.match(splitStyles, /padding-inline:\s*max\([\s\S]*?calc\(var\(--vt-studio-control-stroke, 3px\) \* 2\)[\s\S]*?calc\(var\(--vt-studio-control-height, 44px\) \* \.12\)/);
 });
 
 test("slider split rails are secondary, center is primary, and progress uses full/half secondary fills", () => {
