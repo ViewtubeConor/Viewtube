@@ -129,10 +129,10 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
   margin: 0;
   padding: 0 var(--vt-split-field-pad);
   pointer-events: auto;
-  border: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary);
+  border: 0;
   border-radius: inherit;
   outline: none;
-  box-shadow: none;
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary);
   background: color-mix(in srgb, var(--vt-split-field-primary) 50%, transparent);
   background-clip: padding-box;
   color: var(--vt-split-field-primary);
@@ -152,9 +152,9 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
 
 html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"]:is(:focus, :focus-visible),
 html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size]:is(:focus, :focus-visible) {
-  border: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary);
+  border: 0;
   outline: none;
-  box-shadow: none;
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary);
   background: color-mix(in srgb, var(--vt-split-field-primary) 15%, transparent);
   color: #000;
   -webkit-text-fill-color: #000;
@@ -196,4 +196,17 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
 html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size]:is(:focus, :focus-visible) {
   border-top-color: var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a)));
   border-bottom-color: var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a)));
+}
+
+/* Inset stroke is painted inside the content box, so it cannot be clipped
+   from the top or bottom at Standard and Compact heights. */
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"],
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size] {
+  border: 0;
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a, #36e0f6)));
+}
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-control="true"][data-size]:is(:focus, :focus-visible) {
+  border: 0;
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a, #36e0f6)));
 }
