@@ -155,6 +155,7 @@ export default defineConfig(() => ({
   preview: {
     host: true,
     allowedHosts: [
+      'viewtube-em7u.onrender.com',
       'viewtube-3-ed89.onrender.com',
       'viewtube-project-builder-preview-live.onrender.com',
       'viewtube-pr-429-vault-live.onrender.com',
