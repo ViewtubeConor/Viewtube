@@ -3376,95 +3376,62 @@
   min-width: 0;
 }
 
-/* Full-row auto-width contract for the counter / slider primitive modules.
-   Keep each module, specimen lane, pair wrapper, and production primitive stretched
-   through every nested grid boundary; internal split rails remain primitive-owned. */
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] {
+/* Full-row auto-width contract for the six canonical counter/slider families.
+   Target each structural layer explicitly. Never group a family root with a descendant
+   selector: that caused only the final selector in each group to reach its intended node. */
+.vt-confirmed-family:is(
+  [data-vt-primitive-title^="StudioCounter"],
+  [data-vt-primitive-title^="StudioSideCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitSlider"],
+  [data-vt-primitive-title^="StudioLeftWordCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+  [data-vt-primitive-title^="StudioLeftWordSlider"]
+) {
   grid-column: 1 / -1;
   justify-self: stretch;
+  align-self: stretch;
   width: 100%;
   min-width: 0;
   max-width: none;
 }
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] > .vt-confirmed-primitive-body > .vt-confirmed-variants {
+.vt-confirmed-family:is(
+  [data-vt-primitive-title^="StudioCounter"],
+  [data-vt-primitive-title^="StudioSideCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitSlider"],
+  [data-vt-primitive-title^="StudioLeftWordCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+  [data-vt-primitive-title^="StudioLeftWordSlider"]
+) :is(.vt-confirmed-primitive-body, .vt-confirmed-variants, .vt-confirmed-counter-row, .vt-confirmed-counter-size-rows, .vt-confirmed-counter-size-row, .vt-confirmed-counter-pair, .vt-confirmed-slider-pair, .vt-confirmed-variant) {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  justify-self: stretch;
+  align-self: stretch;
+}
+.vt-confirmed-family:is(
+  [data-vt-primitive-title^="StudioCounter"],
+  [data-vt-primitive-title^="StudioSideCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitSlider"],
+  [data-vt-primitive-title^="StudioLeftWordCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+  [data-vt-primitive-title^="StudioLeftWordSlider"]
+) :is(.vt-confirmed-variants, .vt-confirmed-counter-row, .vt-confirmed-counter-size-rows, .vt-confirmed-counter-size-row, .vt-confirmed-counter-pair, .vt-confirmed-slider-pair) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   justify-items: stretch;
-  width: 100%;
-  min-width: 0;
-  max-width: none;
 }
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-row,
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-size-rows,
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-size-row,
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-pair,
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-slider-pair {
-  justify-items: stretch;
-  width: 100%;
-  min-width: 0;
-  max-width: none;
-}
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-variant.is-full-row {
-  grid-column: 1 / -1;
+.vt-confirmed-family:is(
+  [data-vt-primitive-title^="StudioCounter"],
+  [data-vt-primitive-title^="StudioSideCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitSlider"],
+  [data-vt-primitive-title^="StudioLeftWordCounter"],
+  [data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+  [data-vt-primitive-title^="StudioLeftWordSlider"]
+) :is(.vt-studio-counter, .vt-studio-side-counter, .vt-studio-double-split-slider, .vt-studio-left-word-counter, .vt-studio-value-toggle.vt-studio-word-counter, .vt-studio-left-word-slider) {
+  display: flex;
   justify-self: stretch;
+  align-self: stretch;
   width: 100%;
   min-width: 0;
   max-width: none;
 }
-.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
-.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-studio-counter,
-.vt-studio-side-counter,
-.vt-studio-double-split-slider,
-.vt-studio-left-word-counter,
-.vt-studio-value-toggle.vt-studio-word-counter,
-.vt-studio-left-word-slider {
-  justify-self: stretch;
-  width: 100%;
-  min-width: 0;
-  max-width: none;
-}
-

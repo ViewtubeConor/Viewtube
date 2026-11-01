@@ -61,6 +61,13 @@ test("primary percentage field fills blend against white instead of transparency
   assert.doesNotMatch([controls, splitInput, fields, toggles, splitStyles].join("\n"), /color-mix\([^;]*(?:vt-field-primary|vt-split-field-primary|vt-studio-control-accent|vt-studio-control-secondary|vt-studio-slider-left-fill|vt-toggle-fill)[^;]*,\s*transparent\)/);
 });
 
+test("toggle focus changes glyph color only and preserves the resting primary face fill", () => {
+  assert.match(toggles, /focus-within \.vt-studio-value-toggle__face[\s\S]*?-webkit-text-stroke-color:/);
+  assert.doesNotMatch(toggles, /focus-within[^{}]*\{[^}]*background\s*:/);
+  assert.doesNotMatch(toggles, /focus-within[^{}]*\{[^}]*background-color\s*:/);
+  assert.doesNotMatch(toggles, /focus-within[^{}]*\{[^}]*--vt-toggle-fill\s*:/);
+});
+
 test("slider right-rail numerals blend secondary with white by default", () => {
   assert.match(controls, /\.vt-studio-double-split-slider\s*\{[^}]*--vt-studio-number-background:\s*var\(--vt-studio-control-secondary/s);
   assert.match(controls, /\.vt-studio-double-split-slider \.vt-studio-double-split-slider__value\s*\{[^}]*color:\s*color-mix\(in srgb, #fff[^;]*var\(--vt-studio-number-background\)/s);
