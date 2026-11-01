@@ -53,7 +53,7 @@ test("textareas expose the primary 15% focus fill with the shared 500ms transiti
   assert.ok(fields.includes('-webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out'));
 });
 
-test("text boxes use a primary inline stroke with no shadow geometry", () => {
+test("text boxes retain a primary inline inset stroke without a clearing rule", () => {
   assert.ok(fields.includes('.vt-studio-text-box[data-vt-studio-control="true"]'));
   assert.ok(fields.includes('box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-field-primary'));
   assert.doesNotMatch(fields, /\.vt-studio-text-box\[data-vt-studio-control="true"\]\s*\{\s*box-shadow:\s*none/);
