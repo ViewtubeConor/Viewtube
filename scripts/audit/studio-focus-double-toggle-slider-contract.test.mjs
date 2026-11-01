@@ -42,7 +42,8 @@ test("slider split rails are secondary, center is primary, and progress uses ful
   assert.doesNotMatch(splitStyles, /\.vt-studio-double-split-slider \.vt-studio-double-split-slider__rail\s*\{[^}]*background:/s);
   assert.match(splitStyles, /padding-inline:\s*max\([\s\S]*?calc\(var\(--vt-studio-control-height, 44px\) \* \.12\)/);
   assert.match(controls, /--vt-studio-slider-left-fill:\s*var\(--vt-studio-control-secondary/);
-  assert.match(controls, /color-mix\(in srgb, var\(--vt-studio-slider-left-fill\) 50%, transparent\)/);
+  assert.match(controls, /color-mix\(in srgb, white 50%, var\(--vt-studio-slider-left-fill\) 50%\)/i);
+  assert.doesNotMatch(controls, /color-mix\(in srgb, var\(--vt-studio-slider-left-fill\) 50%, transparent\)/);
   assert.match(controls, /padding-inline:\s*max\(/);
 });
 
@@ -63,3 +64,27 @@ test("split text input keeps a continuous primary inset stroke on all four edges
   assert.match(splitInput, /box-shadow:\s*inset 0 0 0 var\(--vt-studio-control-stroke, 3px\) var\(--vt-split-field-primary/);
 });
 
+
+
+test("percentage field fills blend primary with white instead of transparency", () => {
+  assert.match(controls, /--vt-field-fill-rest:\s*color-mix\(in srgb, white 50%, var\(--vt-field-primary\) 50%\)/i);
+  assert.match(controls, /--vt-field-fill-focus:\s*color-mix\(in srgb, white 85%, var\(--vt-field-primary\) 15%\)/i);
+  assert.doesNotMatch(controls, /--vt-field-fill-(?:rest|focus):[^;]*transparent/);
+  assert.match(splitInput, /background:\s*color-mix\(in srgb, white 50%, var\(--vt-split-field-primary\) 50%\)/i);
+  assert.match(splitInput, /background:\s*color-mix\(in srgb, white 85%, var\(--vt-split-field-primary\) 15%\)/i);
+});
+
+test("double-split slider right rail numerals blend secondary with white by default", () => {
+  assert.match(controls, /\.vt-studio-double-split-slider\s*\{[^}]*--vt-studio-number-background:\s*var\(--vt-studio-control-secondary/s);
+  assert.match(controls, /\.vt-studio-double-split-slider \.vt-studio-double-split-slider__value\s*\{[^}]*color:\s*color-mix\(in srgb, #fff[^;]*var\(--vt-studio-number-background\)/s);
+});
+
+test("double-split slider track and progress surface use the shared corner radius", () => {
+  assert.match(controls, /\.vt-studio-double-split-slider input\[type="range"\]\s*\{[^}]*border-radius:\s*var\(--vt-studio-slider-radius/s);
+  assert.match(controls, /\.vt-studio-double-split-slider input\[type="range"\]::-webkit-slider-runnable-track\s*\{[^}]*border-radius:\s*var\(--vt-studio-slider-radius/s);
+});
+
+test("split text input does not reintroduce top and bottom borders over its inset stroke", () => {
+  assert.doesNotMatch(splitInput, /border-top:\s*var\(--vt-studio-control-stroke/);
+  assert.doesNotMatch(splitInput, /border-bottom:\s*var\(--vt-studio-control-stroke/);
+});
