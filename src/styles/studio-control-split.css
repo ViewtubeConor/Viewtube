@@ -315,7 +315,7 @@ button[data-vt-studio-play-pause="true"] [data-vt-studio-split-rail] {
   letter-spacing: var(--vt-studio-control-letter-spacing, -.02em) !important;
   text-transform: var(--vt-studio-control-text-transform, uppercase) !important;
   padding: 0 14px !important;
-  background: color-mix(in srgb, var(--vt-stepper-primary) var(--vt-studio-control-default-fill-opacity, 50%), transparent) !important;
+  background: color-mix(in srgb, white 50%, var(--vt-stepper-primary) 50%) !important;
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
   -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) #000 !important;
