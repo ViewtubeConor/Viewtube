@@ -29,7 +29,7 @@ test("double-side focus keeps the outer perimeter and activates only the focused
 test("split text input uses a full primary inner border at every supported size, including top and bottom", () => {
   assert.match(splitInput, /box-shadow:\s*inset 0 0 0 var\(--vt-studio-control-stroke, 3px\) var\(--vt-split-field-primary/);
   assert.match(splitInput, /:is\(:focus, :focus-visible\)[\s\S]*?box-shadow:\s*inset 0 0 0 var\(--vt-studio-control-stroke, 3px\) var\(--vt-split-field-primary/);
-  assert.match(splitInput, /data-size/);
+  assert.match(splitInput, /data-size/);\n  assert.doesNotMatch(splitInput, /border-(?:top|bottom):\\s*var\\(--vt-studio-control-stroke/);
 });
 
 test("slider track has tier-aware clearance from both vertical dividers", () => {
@@ -88,3 +88,4 @@ test("split text input does not reintroduce top and bottom borders over its inse
   assert.doesNotMatch(splitInput, /border-top:\s*var\(--vt-studio-control-stroke/);
   assert.doesNotMatch(splitInput, /border-bottom:\s*var\(--vt-studio-control-stroke/);
 });
+\n\ntest("primary and secondary percentage fills blend against white, never transparency", () => {\n  const relevant = [controls, splitInput, fields].join("\\n");\n  assert.doesNotMatch(relevant, /color-mix\\([^;]*(?:vt-field-primary|vt-split-field-primary|vt-studio-control-accent|vt-studio-control-secondary|vt-studio-slider-left-fill)[^;]*,\\s*transparent\\)/);\n});\n
