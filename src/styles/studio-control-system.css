@@ -3840,7 +3840,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.vt-studio-double-split-slider:has(input[type="range"]:is(:active, :focus)) .vt-studio-double-split-slider__value {
+.vt-studio-double-split-slider:has(input[type="range"]:is(:active, :focus, :focus-visible)) .vt-studio-double-split-slider__value {
   color: var(--vt-studio-number-active-color, #000);
   -webkit-text-fill-color: var(--vt-studio-number-active-color, #000);
   -webkit-text-stroke-color: var(--vt-studio-number-active-stroke, #000);
@@ -3886,6 +3886,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
 }
 .vt-studio-double-split-slider input[type="range"]::-webkit-slider-runnable-track {
   box-sizing: border-box;
+  border-radius: var(--vt-studio-slider-radius);
   height: var(--vt-studio-slider-track-height);
   border: var(--vt-studio-slider-stroke) solid #000;
   background: transparent;
@@ -3904,6 +3905,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
 }
 .vt-studio-double-split-slider input[type="range"]::-moz-range-track {
   box-sizing: border-box;
+  border-radius: var(--vt-studio-slider-radius);
   height: var(--vt-studio-slider-track-height);
   border: var(--vt-studio-slider-stroke) solid #000;
   border-radius: var(--vt-studio-slider-radius);
