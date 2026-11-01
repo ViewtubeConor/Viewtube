@@ -21,8 +21,8 @@
   --vt-field-text-focus: #000;
   --vt-field-text-stroke-focus: #000;
   --vt-field-caret-focus: var(--vt-field-primary);
-  --vt-field-fill-rest: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity, 50%), transparent);
-  --vt-field-fill-focus: color-mix(in srgb, var(--vt-field-primary) 15%, transparent);
+  --vt-field-fill-rest: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity, 50%), white);
+  --vt-field-fill-focus: color-mix(in srgb, var(--vt-field-primary) 15%, white);
   --vt-field-focus-outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, 0.65)) solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
 
   --vt-studio-control-height: var(--vt-studio-standard-height, 44px);
@@ -799,7 +799,7 @@ select[data-vt-studio-control="true"] {
   min-height: var(--vt-studio-control-height, 44px);
   border: var(--vt-studio-control-stroke, 3px) solid #000;
   border-radius: var(--vt-studio-control-radius, 6px);
-  background-color: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, transparent);
+  background-color: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, white);
   color: var(--vt-studio-control-accent, var(--pair-a));
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: var(--vt-studio-control-font-size, 38px);
@@ -813,7 +813,7 @@ select[data-vt-studio-control="true"] {
 select[data-vt-studio-control="true"][data-size="compact"] { padding-left: 8px; font-size: 24px; }
 select[data-vt-studio-control="true"]:focus,
 select[data-vt-studio-control="true"]:focus-visible {
-  background-color: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 15%, transparent);
+  background-color: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 15%, white);
   color: #000;
   outline: var(--vt-studio-control-outline-stroke, 1.5px) solid var(--vt-studio-control-secondary, var(--pair-b));
   outline-offset: 0;
@@ -829,7 +829,7 @@ select[data-vt-studio-control="true"]:disabled { cursor: not-allowed; opacity: .
 
 /* Canonical Studio Controls ownership: migrated switch, choice, and word-toggle primitives. */
 /* Canonical 44px control family — ratios mirror the supplied reference specimen. */
-.vt-studio-44-switch,.vt-studio-44-choice{appearance:none;-webkit-appearance:none;position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;margin:0;padding:0;border:0;background:color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, transparent);cursor:pointer;touch-action:manipulation;}
+.vt-studio-44-switch,.vt-studio-44-choice{appearance:none;-webkit-appearance:none;position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;margin:0;padding:0;border:0;background:color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, white);cursor:pointer;touch-action:manipulation;}
 .vt-studio-44-switch{width:75.68px;height:44px}
 .vt-studio-44-switch.is-round{border-radius:999px}
 .vt-studio-44-switch.is-rect{border-radius:7.333px}
@@ -856,7 +856,7 @@ select[data-vt-studio-control="true"]:disabled { cursor: not-allowed; opacity: .
 .vt-studio-44-switch.is-white-indicator .vt-studio-44-handle,.vt-studio-44-choice.is-white-indicator .vt-studio-44-dot{background:white;}
 .vt-studio-44-switch.is-solid:is(.is-on, .is-checked, [aria-checked="true"]),.vt-studio-44-choice.is-solid:is(.is-on, .is-checked, [aria-checked="true"]),.vt-studio-44-switch.is-white-indicator:is(.is-on, .is-checked, [aria-checked="true"]),.vt-studio-44-choice.is-white-indicator:is(.is-on, .is-checked, [aria-checked="true"]),.vt-studio-44-switch.is-black-indicator:is(.is-on, .is-checked, [aria-checked="true"]),.vt-studio-44-choice.is-black-indicator:is(.is-on, .is-checked, [aria-checked="true"]){background:var(--vt-studio-control-accent, var(--pair-a))}
 .vt-studio-44-switch:focus-visible,.vt-studio-44-choice:focus-visible,.vt-studio-44-word-toggle button:focus-visible{outline:3px solid var(--vt-studio-control-secondary, var(--pair-b));outline-offset:3px}
-.vt-studio-44-word-toggle{--vt-word-height:44px;--vt-word-font-size:38px;--vt-word-radius:7.333px;position:relative;display:inline-flex;align-items:center;height:var(--vt-word-height);border-radius:var(--vt-word-radius);border:3px solid #000;background:color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, transparent);overflow:hidden;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:1000;letter-spacing:-.02em;line-height:1}
+.vt-studio-44-word-toggle{--vt-word-height:44px;--vt-word-font-size:38px;--vt-word-radius:7.333px;position:relative;display:inline-flex;align-items:center;height:var(--vt-word-height);border-radius:var(--vt-word-radius);border:3px solid #000;background:color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, white);overflow:hidden;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:1000;letter-spacing:-.02em;line-height:1}
 .vt-studio-44-word-toggle.is-size-28{--vt-word-height:28px;--vt-word-font-size:24px;--vt-word-radius:4px;border-width:2px}
 .vt-studio-44-word-handle{position:absolute;top:2.75px;bottom:2.75px;left:var(--vt-word-toggle-handle-left, 2.75px);width:var(--vt-word-toggle-handle-width, calc(50% - 5.5px));border-radius:calc(var(--vt-word-radius)*.5);background:var(--vt-studio-control-secondary, var(--pair-b));pointer-events:none;overflow:hidden;z-index:0}
 .vt-studio-44-word-handle-color{position:absolute;inset:0;display:none;border-radius:inherit;pointer-events:none;clip-path:inset(0 0 0 100%)}
@@ -1196,7 +1196,7 @@ button[data-vt-studio-control="true"].vt-studio-44-choice:focus-visible {
   min-width: 0;
   border: var(--vt-field-stroke) solid #000;
   border-radius: var(--vt-studio-control-radius);
-  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity), transparent);
+  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity), white);
   color: var(--vt-field-primary);
   -webkit-text-fill-color: var(--vt-field-primary);
   caret-color: var(--vt-field-primary);
@@ -1268,7 +1268,7 @@ textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][da
   -webkit-text-stroke: var(--vt-studio-control-text-stroke) var(--vt-field-primary);
 }
 input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible) {
-  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-focus-fill-opacity), transparent);
+  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-focus-fill-opacity), white);
   color: #000;
   -webkit-text-fill-color: #000;
   outline: var(--vt-field-outline-stroke) solid var(--vt-field-secondary);
@@ -1277,7 +1277,7 @@ input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):
 input[data-vt-studio-control="true"][data-size="compact"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible) {
 }
 textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"]:is(:focus, :focus-visible) {
-  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-focus-fill-opacity), transparent);
+  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-focus-fill-opacity), white);
   color: #000;
   -webkit-text-fill-color: #000;
   -webkit-text-stroke: var(--vt-studio-control-text-stroke) #000;
@@ -1354,7 +1354,7 @@ button.vt-studio-44-switch.is-rect { border-radius: 7.333px; }
 
 button.vt-studio-44-choice {
   width: 44px;
-  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, transparent);
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, white);
 }
 button.vt-studio-44-choice.is-round { border-radius: 50%; }
 button.vt-studio-44-choice.is-rect { border-radius: 7.333px; }
@@ -2325,7 +2325,7 @@ button[data-vt-studio-circle-icon-button="true"] > [data-vt-studio-button-face] 
   padding: 6px;
   border: var(--vt-studio-control-stroke, 3px) solid var(--vt-studio-control-border, #000);
   border-radius: var(--vt-studio-control-radius, 6px);
-  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, transparent);
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a)) 50%, white);
   color: var(--pair-a, #000);
   font-family: var(--vt-studio-control-font-family, Inter, ui-sans-serif, system-ui, sans-serif);
 }
@@ -3773,7 +3773,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
 .vt-studio-counter:has(
   .vt-studio-counter__button:is(:active, :focus-visible, .is-holding, [data-press-holding="true"])
 ) .vt-studio-counter__value {
-  background: color-mix(in srgb, var(--pair-a) 50%, transparent);
+  background: color-mix(in srgb, var(--pair-a) 50%, white);
   color: var(--vt-studio-number-active-color, #000);
   -webkit-text-fill-color: var(--vt-studio-number-active-color, #000);
   -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) var(--vt-studio-number-active-stroke, #000);
@@ -3791,7 +3791,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
 /* StudioDoubleSplitSlider — double-split rails contrast with the center fill.
    The rectangular v2 handle stays compact, white, and black-outlined. */
 .vt-studio-double-split-slider {
-  --vt-studio-number-background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6));
+  --vt-studio-number-background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
   /* Taller, wider handle scales with the component; micro keeps usable minimums. */
   --vt-studio-slider-track-height: max(6px, calc(var(--vt-studio-control-height, 44px) * .428571));
   --vt-studio-slider-thumb-width: max(7px, calc(var(--vt-studio-control-height, 44px) * .44));
@@ -3879,7 +3879,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
   --vt-studio-slider-left-fill: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
   background: linear-gradient(to right,
     var(--vt-studio-slider-left-fill) 0 var(--vt-studio-slider-progress, 0%),
-    color-mix(in srgb, var(--vt-studio-slider-left-fill) 50%, transparent) var(--vt-studio-slider-progress, 0%) 100%);
+    color-mix(in srgb, white 50%, var(--vt-studio-slider-left-fill) 50%) var(--vt-studio-slider-progress, 0%) 100%);
   border: 0;
   box-shadow: none;
   cursor: pointer;
@@ -3909,7 +3909,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
   border-radius: var(--vt-studio-slider-radius);
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) 50%, transparent) 0 100%
+    color-mix(in srgb, var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) 50%, white) 0 100%
   );
 }
 .vt-studio-double-split-slider input[type="range"]::-moz-range-progress {
@@ -3961,7 +3961,7 @@ html body button[data-vt-studio-button="true"][data-split-left="true"] > [data-v
 /* Left-action side counter shares the same action/value anatomy and palette rules. */
 .vt-studio-left-counter__rail[data-rail="start"] { border-right: var(--vt-studio-control-stroke, 3px) solid #000; }
 .vt-studio-left-counter:has(.vt-studio-side-counter__actions button:is(:active, :focus-visible, .is-holding, [data-press-holding="true"])) .vt-studio-side-counter__value,
-.vt-studio-left-counter:has(.vt-studio-side-counter__actions button:is(:active, :focus-visible, .is-holding, [data-press-holding="true"])) .vt-studio-side-counter__value { background: color-mix(in srgb, var(--pair-a) 50%, transparent); }
+.vt-studio-left-counter:has(.vt-studio-side-counter__actions button:is(:active, :focus-visible, .is-holding, [data-press-holding="true"])) .vt-studio-side-counter__value { background: color-mix(in srgb, var(--pair-a) 50%, white); }
 
 
 /* Canonical Studio Upload Frame — canvas exception, pair-color driven, flat shell. */
@@ -4354,7 +4354,7 @@ html body button[data-vt-studio-button="true"][aria-pressed="true"] > [data-vt-s
    V4: 50% primary -> primary; black indicator. */
 html body .vt-studio-44-switch,
 html body .vt-studio-44-choice {
-  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, transparent) !important;
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, white) !important;
 }
 html body .vt-studio-44-switch.is-solid.is-on,
 html body .vt-studio-44-choice.is-solid.is-on,
@@ -4394,12 +4394,12 @@ html body .vt-studio-44-choice.is-black-indicator .vt-studio-44-dot {
 /* Word toggles use the same four fills. data-active is on the moving handle,
    while aria-pressed identifies the active word. */
 html body .vt-studio-44-word-toggle {
-  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, transparent) !important;
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, white) !important;
 }
 html body .vt-studio-44-word-toggle.is-solid,
 html body .vt-studio-44-word-toggle.is-black-indicator,
 html body .vt-studio-44-word-toggle.is-white-indicator {
-  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, transparent) !important;
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, white) !important;
 }
 html body .vt-studio-44-word-toggle.is-solid:has(.vt-studio-44-word-handle[data-active="true"]),
 html body .vt-studio-44-word-toggle.is-black-indicator:has(.vt-studio-44-word-handle[data-active="true"]),
@@ -4741,7 +4741,7 @@ button.vt-studio-vertical-word-toggle[data-vt-studio-control="true"],
   padding: var(--vt-studio-textarea-standard-padding-block, 10px) var(--vt-studio-textarea-standard-padding-inline, 12px);
   border: var(--vt-studio-control-stroke, 3px) solid #000;
   border-radius: var(--vt-studio-control-radius, 6px);
-  background: color-mix(in srgb, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) var(--vt-studio-control-default-fill-opacity, 50%), transparent);
+  background: color-mix(in srgb, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) var(--vt-studio-control-default-fill-opacity, 50%), white);
   outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, .65)) solid var(--vt-field-secondary, var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)));
   outline-offset: 0;
   box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)));
@@ -5261,7 +5261,7 @@ button[data-vt-studio-button="true"][data-size="micro"] > [data-vt-studio-button
 
 /* Focus parity for both simple and labeled textarea writing surfaces. */
 [data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"]:is(:focus, :focus-visible) {
-  background: color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, transparent);
+  background: color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, white);
   color: #000;
   -webkit-text-fill-color: #000;
   -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) #000;
@@ -5303,7 +5303,7 @@ button[data-vt-studio-button="true"][data-size="micro"] > [data-vt-studio-button
 /* The canonical single-line textbox (StudioTextInput / StudioInput) shares the
    textarea focus color contract while retaining its native left-aligned value. */
 [data-vt-studio-control="true"][data-vt-studio-field-kind="text-input"]:is(:focus, :focus-visible) {
-  background: color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, transparent);
+  background: color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, white);
   color: #000;
   -webkit-text-fill-color: #000;
   -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) #000;
@@ -6393,7 +6393,7 @@ button[data-vt-studio-play-pause="true"][aria-pressed="true"] [data-vt-studio-sp
    master 500ms fade token. The explicit background-color rule wins over
    downstream textarea surface declarations without changing resting fill. */
 html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"]:is(:focus, :focus-visible) {
-  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--pair-a)) 15%, transparent));
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--pair-a)) 15%, white));
   color: #000;
   -webkit-text-fill-color: #000;
   -webkit-text-stroke-color: #000;
