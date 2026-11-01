@@ -603,3 +603,20 @@ test("counter and slider primitive modules preserve the global full-row auto-wid
   assert.doesNotMatch(styles, /\.vt-confirmed-counter-size-row > :is\([^}]+\)\s*\{\s*justify-self:\s*center/);
 });
 
+
+
+test("six confirmed counter and slider families stretch through every catalog wrapper", () => {
+  const familyNames = [
+    "StudioCounter",
+    "StudioSideCounter",
+    "StudioDoubleSplitSlider",
+    "StudioLeftWordCounter",
+    "StudioDoubleSplitWordCounter",
+    "StudioLeftWordSlider",
+  ];
+  for (const name of familyNames) {
+    assert.ok(styles.includes(`[data-vt-primitive-title^="${name}"]`), `${name} family is included in the full-row contract`);
+  }
+  assert.match(styles, /\.vt-confirmed-family:is\([\s\S]*?\)\s*\{[\s\S]*?grid-column:\s*1 \/ -1;[\s\S]*?width:\s*100%;[\s\S]*?max-width:\s*none;/);
+  assert.match(styles, /\.vt-confirmed-family:is\([\s\S]*?\)\s+:is\(\.vt-studio-counter,[\s\S]*?width:\s*100%;[\s\S]*?max-width:\s*none;/);
+});
