@@ -133,7 +133,7 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
   border-radius: inherit;
   outline: none;
   box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary);
-  background: color-mix(in srgb, var(--vt-split-field-primary) 50%, white);
+  background: color-mix(in srgb, white 50%, var(--vt-split-field-primary) 50%);
   background-clip: padding-box;
   color: var(--vt-split-field-primary);
   -webkit-text-fill-color: var(--vt-split-field-primary);
@@ -155,7 +155,7 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
   border: 0;
   outline: none;
   box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary);
-  background: color-mix(in srgb, var(--vt-split-field-primary) 15%, white);
+  background: color-mix(in srgb, white 85%, var(--vt-split-field-primary) 15%);
   color: #000;
   -webkit-text-fill-color: #000;
   -webkit-text-stroke-color: #000;
@@ -185,8 +185,6 @@ html body .vt-studio-split-text-input [data-vt-studio-split-field]::after {
  * drawn inside the rail; it must not be added to the rail's track width.
  */
 
-
-/* A single inset stroke is shared by every size tier. Physical top/bottom borders compete with the inset ring and are intentionally omitted. */
 
 /* Inset stroke is painted inside the content box, so it cannot be clipped
    from the top or bottom at Standard and Compact heights. */
