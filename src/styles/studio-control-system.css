@@ -21,8 +21,8 @@
   --vt-field-text-focus: #000;
   --vt-field-text-stroke-focus: #000;
   --vt-field-caret-focus: var(--vt-field-primary);
-  --vt-field-fill-rest: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity, 50%), white);
-  --vt-field-fill-focus: color-mix(in srgb, var(--vt-field-primary) 15%, white);
+  --vt-field-fill-rest: color-mix(in srgb, white 50%, var(--vt-field-primary) 50%);
+  --vt-field-fill-focus: color-mix(in srgb, white 85%, var(--vt-field-primary) 15%);
   --vt-field-focus-outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, 0.65)) solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
 
   --vt-studio-control-height: var(--vt-studio-standard-height, 44px);
