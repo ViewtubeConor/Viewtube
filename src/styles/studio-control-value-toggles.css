@@ -117,9 +117,6 @@
   -webkit-text-fill-color: var(--vt-studio-number-active-color, #000);
   -webkit-text-stroke-color: var(--vt-studio-number-active-stroke, #000);
 }
-.vt-studio-value-toggle:not(.vt-studio-value-toggle--double):not(.vt-studio-value-toggle--nested):focus-within {
-  background: color-mix(in srgb, white 85%, var(--vt-toggle-fill, var(--pair-a)) 15%);
-}
 .vt-studio-value-toggle--double:focus-within {
   outline: var(--vt-studio-focus-outline-width, calc(var(--vt-studio-control-stroke, 3px) * .65))
     solid var(--vt-studio-focus-outline-color, var(--pair-b));
@@ -147,7 +144,6 @@
    The parent owns the single outline; only the focused half's characters change. */
 .vt-studio-value-toggle--double .vt-studio-value-toggle--nested:focus-within {
   outline: none;
-  background: transparent;
 }
 .vt-studio-value-toggle--double .vt-studio-value-toggle__double-side .vt-studio-value-toggle__face,
 .vt-studio-value-toggle--double .vt-studio-value-toggle__double-side .vt-studio-word-counter__value {
