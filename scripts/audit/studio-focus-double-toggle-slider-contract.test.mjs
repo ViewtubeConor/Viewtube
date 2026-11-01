@@ -52,7 +52,8 @@ test("primary percentage field fills blend against white instead of transparency
   assert.match(splitInput, /background:\s*color-mix\(in srgb, white 50%, var\(--vt-split-field-primary\) 50%\)/i);
   assert.match(splitInput, /background:\s*color-mix\(in srgb, white 85%, var\(--vt-split-field-primary\) 15%\)/i);
   assert.match(toggles, /background:\s*color-mix\(in srgb, white 85%, var\(--vt-toggle-fill[^;]*15%\)/i);
-  assert.doesNotMatch([controls, splitInput, fields, toggles].join("\n"), /color-mix\([^;]*(?:vt-field-primary|vt-split-field-primary|vt-studio-control-accent|vt-studio-control-secondary|vt-studio-slider-left-fill|vt-toggle-fill)[^;]*,\s*transparent\)/);
+  assert.match(splitStyles, /color-mix\(in srgb, white 50%, var\(--vt-stepper-primary\) 50%\)/i);
+  assert.doesNotMatch([controls, splitInput, fields, toggles, splitStyles].join("\n"), /color-mix\([^;]*(?:vt-field-primary|vt-split-field-primary|vt-studio-control-accent|vt-studio-control-secondary|vt-studio-slider-left-fill|vt-toggle-fill)[^;]*,\s*transparent\)/);
 });
 
 test("slider right-rail numerals blend secondary with white by default", () => {
