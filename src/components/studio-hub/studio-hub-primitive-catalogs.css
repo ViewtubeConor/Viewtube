@@ -3319,12 +3319,6 @@
   width: 100%;
   min-width: 0;
 }
-.vt-confirmed-direct-primitive-rows > .vt-confirmed-variant > :is(.vt-studio-counter, .vt-studio-side-counter, .vt-studio-left-counter) {
-  justify-self: center;
-}
-.vt-confirmed-counter-size-row > :is(.vt-studio-counter, .vt-studio-side-counter, .vt-studio-left-counter) {
-  justify-self: center;
-}
 
 
 /* Confirmed Studio overview: keep the canonical live component grid visible before the long-form inventory. */
@@ -3381,3 +3375,96 @@
   width: 100%;
   min-width: 0;
 }
+
+/* Full-row auto-width contract for the counter / slider primitive modules.
+   Keep each module, specimen lane, pair wrapper, and production primitive stretched
+   through every nested grid boundary; internal split rails remain primitive-owned. */
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] > .vt-confirmed-primitive-body > .vt-confirmed-variants {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-row,
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-size-rows,
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-size-row,
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-counter-pair,
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-slider-pair {
+  justify-items: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-confirmed-variant.is-full-row {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+.vt-confirmed-family[data-vt-primitive-title^="StudioCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioSideCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitSlider"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioDoubleSplitWordCounter"],
+.vt-confirmed-family[data-vt-primitive-title^="StudioLeftWordSlider"] .vt-studio-counter,
+.vt-studio-side-counter,
+.vt-studio-double-split-slider,
+.vt-studio-left-word-counter,
+.vt-studio-value-toggle.vt-studio-word-counter,
+.vt-studio-left-word-slider {
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+

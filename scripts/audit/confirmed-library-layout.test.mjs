@@ -574,3 +574,32 @@ test("split-left, split-right, double-split, and two-line buttons share one fami
   assert.match(family, /StudioDoubleSplitButton sizeVariant=\{size\}/);
   assert.doesNotMatch(catalog, /title="StudioSplitRightButton · Standard"|title="Two-Line Button · Standard \+ Compact"|title="Split Two-Line Button · Standard \+ Compact"/);
 });
+
+test("counter and slider primitive modules preserve the global full-row auto-width contract", () => {
+  const moduleTitles = [
+    "StudioCounter",
+    "StudioSideCounter",
+    "StudioDoubleSplitSlider",
+    "StudioLeftWordCounter",
+    "StudioDoubleSplitWordCounter",
+    "StudioLeftWordSlider",
+  ];
+  for (const title of moduleTitles) {
+    assert.ok(catalog.includes(`title="${title}`), `${title} module remains in the confirmed library`);
+    assert.ok(styles.includes(`.vt-confirmed-family[data-vt-primitive-title^="${title}"]`),
+      `${title} module has an explicit full-row layout contract`);
+  }
+  assert.match(styles, /\.vt-confirmed-family\[data-vt-primitive-title\^="StudioCounter"\][\s\S]*?grid-column:\s*1 \/ -1;[\s\S]*?justify-self:\s*stretch;[\s\S]*?width:\s*100%/);
+  assert.match(styles, /\.vt-confirmed-counter-size-row,[\s\S]*?justify-items:\s*stretch;[\s\S]*?width:\s*100%/);
+  for (const root of [
+    ".vt-studio-counter",
+    ".vt-studio-side-counter",
+    ".vt-studio-double-split-slider",
+    ".vt-studio-left-word-counter",
+    ".vt-studio-value-toggle.vt-studio-word-counter",
+    ".vt-studio-left-word-slider",
+  ]) assert.ok(styles.includes(root), `${root} inherits the module width contract`);
+  assert.doesNotMatch(styles, /\.vt-confirmed-direct-primitive-rows > \.vt-confirmed-variant > :is\([^}]+\)\s*\{\s*justify-self:\s*center/);
+  assert.doesNotMatch(styles, /\.vt-confirmed-counter-size-row > :is\([^}]+\)\s*\{\s*justify-self:\s*center/);
+});
+
