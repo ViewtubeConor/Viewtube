@@ -164,3 +164,39 @@ html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
   color: var(--vt-studio-number-active-color, #000000);
   -webkit-text-fill-color: var(--vt-studio-number-active-color, #000000);
 }
+
+/* Textarea focus paint and text-box inset are finalized here, after shared field rules. */
+html body textarea[data-vt-studio-control="true"],
+html body [data-vt-studio-control="true"] textarea {
+  transition:
+    background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-fill-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    outline-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    outline-width var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
+}
+html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) 15%, transparent));
+  color: var(--vt-field-text-focus, #000);
+  -webkit-text-fill-color: var(--vt-field-text-focus, #000);
+  -webkit-text-stroke-color: var(--vt-field-text-stroke-focus, #000);
+  outline: var(--vt-field-focus-outline, calc(var(--vt-studio-control-stroke, 3px) * .65) solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)));
+  outline-offset: 0;
+  caret-color: var(--vt-field-caret-focus, var(--vt-field-primary, var(--pair-a, #36e0f6)));
+}
+/* Text boxes keep a black outer perimeter plus a visible primary inset ring. */
+html body .vt-studio-text-box[data-vt-studio-control="true"],
+html body [data-vt-studio-control="true"].vt-studio-text-box {
+  box-sizing: border-box;
+  border: var(--vt-studio-control-stroke, 3px) solid #000;
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)));
+}
+html body .vt-studio-text-box[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"].vt-studio-text-box:is(:focus, :focus-visible) {
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, transparent));
+  color: var(--vt-field-text-focus, #000);
+  -webkit-text-fill-color: var(--vt-field-text-focus, #000);
+  -webkit-text-stroke-color: var(--vt-field-text-stroke-focus, #000);
+}
