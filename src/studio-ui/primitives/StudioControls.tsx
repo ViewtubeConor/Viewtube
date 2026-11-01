@@ -129,7 +129,7 @@ export const STUDIO_COMPONENT_GLOBAL_DEFAULTS = {
   fontWeight: 1000,
   strokeColor: "#000000",
   colorPairSystem: "primary = --pair-a; secondary = --pair-b",
-  backgroundFill: "buttons and badges use the global primary/secondary color pair; text inputs and text areas use primary at 50% opacity by default and 15% primary on focus",
+  backgroundFill: "buttons and badges use the global primary/secondary color pair; text inputs and text areas use a 50% white + 50% primary fill by default and an 85% white + 15% primary fill on focus",
   textColor: "editable text fields use primary text and primary glyph stroke at rest, black text and black glyph stroke on focus, with a persistent primary inset; display text boxes always use black text/stroke, primary inset, and secondary outline",
   textTransform: "uppercase",
   letterSpacing: "-0.02em",
