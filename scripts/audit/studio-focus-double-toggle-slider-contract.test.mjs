@@ -62,10 +62,10 @@ test("primary percentage field fills blend against white instead of transparency
 });
 
 test("toggle focus changes glyph color only and preserves the resting primary face fill", () => {
-  assert.match(toggles, /focus-within \\.vt-studio-value-toggle__face[\\s\\S]*?-webkit-text-stroke-color:/);
-  assert.doesNotMatch(toggles, /focus-within[^{}]*\\{[^}]*background\\s*:/);
-  assert.doesNotMatch(toggles, /focus-within[^{}]*\\{[^}]*background-color\\s*:/);
-  assert.doesNotMatch(toggles, /focus-within[^{}]*\\{[^}]*--vt-toggle-fill\\s*:/);
+  assert.match(toggles, /focus-within \.vt-studio-value-toggle__face[\s\S]*?-webkit-text-stroke-color:/);
+  assert.doesNotMatch(toggles, /focus-within[^{}]*\{[^}]*background\s*:/);
+  assert.doesNotMatch(toggles, /focus-within[^{}]*\{[^}]*background-color\s*:/);
+  assert.doesNotMatch(toggles, /focus-within[^{}]*\{[^}]*--vt-toggle-fill\s*:/);
 });
 
 test("slider right-rail numerals blend secondary with white by default", () => {
