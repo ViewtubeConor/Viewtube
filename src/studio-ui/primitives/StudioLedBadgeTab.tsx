@@ -1,4 +1,6 @@
 import React from "react"
+import "../../styles/studio-control-entry.css"
+import "../../styles/studio-led-badge-tab.css"
 
 export type StudioLedBadgeTabMode = "badge" | "tab"
 export type StudioLedAnimation = "prism" | "radar" | "flare2" | "steady" | "blink" | "none"

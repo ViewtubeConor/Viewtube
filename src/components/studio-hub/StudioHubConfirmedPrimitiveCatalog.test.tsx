@@ -14,6 +14,18 @@ const readStudioControlCss = () => [
 ].map((file) => readFileSync(resolve(process.cwd(), "src/styles", file), "utf8")).join("\n")
 
 describe("confirmed composite primitive catalog", () => {
+  it("constrains every confirmed-library module to the toolbox width on mobile", () => {
+    const css = readFileSync(resolve(process.cwd(), "src/styles/studio-confirmed-catalog-modules.css"), "utf8")
+    const containment = css.slice(css.lastIndexOf("/* Confirmed library mobile containment: module cards must fit the toolbox column."))
+    expect(containment).toContain(".vt-confirmed-catalog")
+    expect(containment).toContain(".vt-confirmed-family-module")
+    expect(containment).toContain(".vt-confirmed-primitive-module")
+    expect(containment).toMatch(/width:\s*100%/)
+    expect(containment).toMatch(/max-width:\s*100%/)
+    expect(containment).toMatch(/grid-template-columns:\s*minmax\(0,\s*1fr\)/)
+    expect(containment).toMatch(/@media\s*\(max-width:\s*720px\)/)
+  })
+
   it("retains solid/rainbow status badges, flush navigation tabs, and LED motion specimens", () => {
     const source = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubConfirmedPrimitiveCatalog.tsx"), "utf8")
     expect(source).toContain("LED BADGE · SOLID + RAINBOW")
@@ -51,7 +63,7 @@ describe("confirmed composite primitive catalog", () => {
       "StudioIconButton", "StudioSquareIconButton", "StudioCircleIconButton", "StudioSquareIconButtonGroup",
       "StudioPlayPauseButton", "StudioSwitch", "StudioChoice", "StudioRadio", "StudioCheckbox", "StudioXCheckbox",
       "StudioTextInput",
-      "StudioTextArea", "StudioTextBox", "StudioUsernameInput", "StudioSplitLeftInput",
+      "StudioTextArea", "StudioTextBox", "StudioSplitTextInput",
       "StudioDropdown", "StudioLegendMultiDropdown", "StudioSplitLeftDropdown",
       "StudioArrowToggle", "StudioBarToggle", "StudioWordToggle", "StudioVerticalWordToggle",
       "StudioSideToggle", "StudioDoubleSideToggle", "StudioCounter", "StudioSideCounter", "StudioLeftCounter",
@@ -210,16 +222,15 @@ describe("confirmed composite primitive catalog", () => {
     expect(html).toContain('aria-label="Compact circle icon button V4"')
   })
 
-  it("registers the username composite with standard and compact native inputs", () => {
-    const html = renderToStaticMarkup(<StudioHubConfirmedPrimitiveCatalog />)
-    expect(html).toContain('StudioUsernameInput · Split Identity Field')
-    expect(html).toContain('data-vt-studio-username-input="true"')
-    expect(html).toContain('data-vt-studio-username-rail="true"')
-    expect(html).toContain('data-icon-size-variant="large"')
-    expect(html).toContain('data-vt-library-component="StudioUsernameInput"')
-    expect(html).toContain('aria-label="Standard username"')
-    expect(html).toContain('aria-label="Compact username"')
-    expect(html).toContain('aria-label="Disabled username"')
+  it("registers the unified split text input across left, right, double, and all five sizes", () => {
+    const html = renderToStaticMarkup(<StudioHubConfirmedPrimitiveCatalog />);
+    expect(html).toContain('data-vt-library-component="StudioSplitTextInput"');
+    expect(html).toContain('aria-label="Standard split-left text input"');
+    expect(html).toContain('aria-label="Standard split-right text input"');
+    expect(html).toContain('aria-label="Standard double-split text input"');
+    expect(html).toContain('aria-label="Supreme split-left text input"');
+    expect(html).toContain('aria-label="Mini split-left text input"');
+    expect(html).toContain('aria-label="Micro split-left text input"');
   })
   it("registers the production closeable badge and animated tag editor under global rule exceptions", () => {
     const html = renderToStaticMarkup(<StudioHubConfirmedPrimitiveCatalog />)
@@ -702,8 +713,8 @@ describe("confirmed primitive representative coverage", () => {
     for (const primitive of [
       "StudioButton", "StudioSplitLeftButton", "StudioDoubleSplitButton", "StudioTwoLineButton",
       "StudioSplitTwoLineButton", "StudioDropdown", "StudioLegendMultiDropdown", "StudioSplitLeftDropdown",
-      "StudioTextInput", "StudioTextArea", "StudioTextBox", "StudioUsernameInput", "StudioNumberInput",
-      "StudioSplitLeftInput", "StudioSplitTextInput", "StudioCounter", "StudioSideCounter", "StudioLeftCounter",
+      "StudioTextInput", "StudioTextArea", "StudioTextBox", "StudioNumberInput",
+      "StudioSplitTextInput", "StudioCounter", "StudioSideCounter", "StudioLeftCounter",
       "StudioLeftWordCounter", "StudioDoubleSplitSlider", "StudioLeftWordSlider", "StudioSplitLeftBadge",
       "StudioSplitRightBadge", "StudioDoubleSplitBadge", "StudioRadio", "StudioCheckbox", "StudioXCheckbox",
       "StudioWordToggle", "StudioVerticalWordToggle", "StudioArrowToggle", "StudioSideToggle",
@@ -820,6 +831,19 @@ describe("confirmed representatives counter and slider design coverage", () => {
 });
 
 
+describe("confirmed counter and slider palette contract", () => {
+  it("uses the dedicated value-toggle stylesheet and excludes inverse-palette counter specimens", () => {
+    const source = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubConfirmedPrimitiveCatalog.tsx"), "utf8");
+    expect(source).toContain('css="src/styles/studio-control-value-toggles.css"');
+    expect(source).not.toContain('StudioCounter className="is-reversed"');
+    expect(source).not.toContain('StudioSideCounter className="is-reversed"');
+    expect(source).not.toContain('StudioLeftCounter className="is-reversed"');
+    expect(source).not.toContain('StudioDoubleSplitSlider className="is-reversed"');
+    expect(source).not.toContain('StudioDoubleSplitWordCounter className="is-reversed"');
+    expect(source).not.toContain('StudioLeftWordSlider className="is-reversed"');
+  });
+});
+
 describe("confirmed individual module variant completeness", () => {
   it("renders every supported size tier in the dropdown and split-button family modules", () => {
     const source = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubConfirmedPrimitiveCatalog.tsx"), "utf8");
@@ -848,8 +872,9 @@ describe("confirmed individual module variant completeness", () => {
     expect(wordFamily).toContain('["60", "44", "28", "20", "12"]');
     expect(dropdownFamily).toContain("StudioLegendMultiDropdown");
     expect(source).toContain("StudioIconButton · All Five Sizes");
-    expect(source).toContain('data-vt-library-component="StudioSplitLeftInput"');
-    expect(source).toContain('Compact split-left text input');
+    expect(source).toContain('data-vt-library-component="StudioSplitTextInput"');
+    expect(source).toContain('MINI · LEFT / RIGHT / DOUBLE');
+    expect(source).toContain('MICRO · LEFT / RIGHT / DOUBLE');
     expect(source).toContain('["supreme", "mini", "micro"] as const');
     expect(dropdownFamily).toContain("StudioSplitLeftDropdown");
   });
@@ -898,5 +923,30 @@ describe("confirmed library cleanup and counter module visibility", () => {
     }
     expect(source).toContain('data-vt-library-component="StudioComponentGrid"');
     expect(source).toContain('data-vt-library-component="StudioComponentGridCell"');
+  });
+});
+
+
+describe("primitive module global width and stylesheet ownership", () => {
+  it("shows canonical full-row auto width and shared styles in each primitive module settings panel", () => {
+    const catalog = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubConfirmedPrimitiveCatalog.tsx"), "utf8");
+    expect(catalog).toContain('className="vt-confirmed-global-settings"');
+    expect(catalog).toContain("Width: full-row auto width by default");
+    expect(catalog).toContain("canonical Studio control entry");
+  });
+
+  it("loads the canonical control entry from independently imported primitive modules", () => {
+    const modules = [
+      "StudioControls.tsx",
+      "StudioValueToggles.tsx",
+      "StudioLedBadgeTab.tsx",
+      "StudioComponentGrid.tsx",
+      "StudioSplitTextInput.tsx",
+      "StudioSplitAccordion.tsx",
+    ];
+    for (const module of modules) {
+      const source = readFileSync(resolve(process.cwd(), "src/studio-ui/primitives", module), "utf8");
+      expect(source, module).toContain("studio-control-entry.css");
+    }
   });
 });

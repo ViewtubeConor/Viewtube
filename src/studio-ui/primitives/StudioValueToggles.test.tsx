@@ -2,7 +2,7 @@
 import React, { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { StudioArrowToggle, StudioBarToggle, StudioDoubleSideToggle, StudioSideToggle } from "./StudioValueToggles";
+import { StudioArrowToggle, StudioBarToggle, StudioDoubleSideToggle, StudioDoubleSplitWordCounter, StudioSideToggle } from "./StudioValueToggles";
 
 const cleanups: Array<() => void> = [];
 function mount(element: React.ReactElement) {
@@ -28,6 +28,19 @@ afterEach(() => {
 });
 
 describe("Studio value toggle primitives", () => {
+  it("renders the controlled double-split word counter in the canonical value-toggle shell", () => {
+    const onValueChange = vi.fn();
+    const { container } = mount(<StudioDoubleSplitWordCounter size="standard" value={1} onValueChange={onValueChange} />);
+    const shell = container.querySelector(".vt-studio-split-shell.vt-studio-value-toggle.vt-studio-word-counter");
+    expect(shell).toBeTruthy();
+    expect(shell?.getAttribute("data-vt-studio-control-kind")).toBe("studio-double-split-word-counter");
+    expect(shell?.querySelectorAll(":scope > [data-vt-studio-split-rail]")).toHaveLength(2);
+    click(container.querySelector('button[aria-label="Previous Word"]'));
+    expect(onValueChange).toHaveBeenLastCalledWith(4);
+    click(container.querySelector('button[aria-label="Next Word"]'));
+    expect(onValueChange).toHaveBeenLastCalledWith(2);
+  });
+
   it("cycles Arrow Toggle options endlessly in both directions without disabling boundary arrows", () => {
     const onValueChange = vi.fn();
     const { container } = mount(<StudioArrowToggle options={["A", "B", "C"]} value="A" onValueChange={onValueChange} />);
@@ -43,7 +56,9 @@ describe("Studio value toggle primitives", () => {
     const onValueChange = vi.fn();
     const { container } = mount(<StudioSideToggle options={["LOW", "MID", "HIGH"]} value="LOW" onValueChange={onValueChange} arrowSide="left" />);
     expect(container.querySelector(".vt-studio-value-toggle__face")?.textContent).toContain("LOW");
-    const arrows = container.querySelectorAll(".vt-studio-value-toggle__arrow-stack button");
+    expect(container.querySelector(".vt-studio-side-counter")).not.toBeNull();
+    expect(container.querySelector(".vt-studio-left-counter__rail[data-rail=\"start\"]")).not.toBeNull();
+    const arrows = container.querySelectorAll(".vt-studio-side-counter__actions button");
     expect(arrows).toHaveLength(2);
     expect((arrows[0] as HTMLButtonElement).disabled).toBe(false);
     expect((arrows[1] as HTMLButtonElement).disabled).toBe(false);

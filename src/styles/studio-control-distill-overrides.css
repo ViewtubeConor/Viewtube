@@ -3,41 +3,6 @@
  * Keep this file focused on cross-family corrections; primitive geometry remains token-owned.
  */
 
-/* Canonical token-driven editable-field defaults; no specificity arms race. */
-html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-html body textarea[data-vt-studio-control="true"],
-html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-html body [data-vt-studio-control="true"] textarea {
-  box-sizing: border-box;
-  border-color: #000;
-  color: var(--vt-field-text);
-  -webkit-text-fill-color: var(--vt-field-text);
-  -webkit-text-stroke-color: var(--vt-field-text-stroke);
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width);
-  background-color: var(--vt-field-fill-rest);
-  caret-color: var(--vt-field-text);
-  box-shadow: none;
-  transition:
-    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
-    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
-    background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
-    outline-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
-    outline-width var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
-}
-html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
-html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
-  color: var(--vt-field-text-focus);
-  -webkit-text-fill-color: var(--vt-field-text-focus);
-  -webkit-text-stroke-color: var(--vt-field-text-stroke-focus);
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width);
-  background-color: var(--vt-field-fill-focus);
-  caret-color: var(--vt-field-caret-focus);
-  outline: var(--vt-field-focus-outline);
-  outline-offset: 0;
-  box-shadow: none;
-}
 /* Floating labels use the same raised size across editable field kinds. */
 .vt-studio-floating-field {
   --vt-studio-floating-label-risen-font-size: 12px;
@@ -75,36 +40,6 @@ html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
   touch-action: manipulation;
 }
 
-/* Stack rails share one centered divider; child borders cannot double it. */
-.vt-studio-value-toggle__arrow-stack {
-  position: relative;
-  display: grid !important;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  border: 0;
-}
-.vt-studio-value-toggle__arrow-stack > .vt-studio-value-toggle__arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 0;
-  border-bottom: 0 !important;
-}
-.vt-studio-value-toggle__arrow-stack::after {
-  content: "";
-  position: absolute;
-  z-index: 3;
-  top: 50%;
-  right: 0;
-  left: 0;
-  height: var(--vt-studio-control-stroke, 3px);
-  background: #000;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
 /* Icon groups size to their content instead of stretching across the row. */ 
  .vt-studio-square-icon-button-group { 
    display: inline-flex; 
@@ -116,20 +51,8 @@ html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
  
 
 
-/* Value toggles use the secondary focus outline without changing geometry. */
-.vt-studio-value-toggle:focus-within,
-.vt-studio-split-shell.vt-studio-value-toggle:focus-within,
-[data-vt-studio-value-toggle]:focus-within {
-  outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, 0.65))
-    solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
-  outline-offset: 0;
-}
-.vt-studio-value-toggle__arrow:focus-visible {
-  outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, 0.65))
-    solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
-  outline-offset: calc(var(--vt-studio-control-stroke, 3px) * -1);
-  z-index: 5;
-}
+/* Value-toggle focus and character treatment are owned by
+   studio-control-value-toggles.css and the shared counter interaction tokens. */
 
 /* Multiselect count is a compact black badge inside the trigger text. */
 .vt-studio-legend-trigger-text {
@@ -224,7 +147,7 @@ html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
   width: var(--vt-bar-width);
   min-width: var(--vt-bar-width);
   max-width: var(--vt-bar-width);
-  height: var(--vt-bar-height);
+  height: 65%;
   aspect-ratio: 2 / 5;
   align-self: center;
   border: 0 !important;
@@ -361,79 +284,9 @@ html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
 }
 
 
-/* Final regression-recovery contract: this file loads last in studio-control-entry.css. */
-/* Editable fields use primary glyph strokes; read-only TextBox is the explicit exception. */
-html body input[data-vt-studio-control="true"],
-html body textarea[data-vt-studio-control="true"],
-html body [data-vt-studio-control="true"] textarea {
-  -webkit-text-stroke-color: var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) !important;
-  text-stroke: var(--vt-studio-control-text-stroke, 1px) var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) !important;
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width, var(--vt-studio-control-text-stroke, 1px));
-  color: var(--vt-field-text, #000);
-  -webkit-text-fill-color: var(--vt-field-text, #000);
-}
-/* Read-only TextBox intentionally keeps black text and black glyph stroke.
-   Its secondary outline (orange in the current palette) is a separate outer stroke. */
-html body .vt-studio-text-box[data-vt-studio-control="true"],
-html body .vt-studio-text-box[data-vt-studio-control="true"][data-size] {
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  -webkit-text-stroke-color: #000 !important;
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width, var(--vt-studio-control-text-stroke, 1px)) !important;
-  text-stroke: var(--vt-studio-control-text-stroke, 1px) #000 !important;
-}
+/* Side and double-side faces inherit their appearance and character tokens
+   from the shared value-toggle primitive; no local !important color layer. */
 
-/* Side and double-side toggle faces are solid primary like counter value faces.
-   Arrow button cells use the same solid secondary fill, black glyphs and shared divider. */
-html body .vt-studio-value-toggle--side:not(.vt-studio-value-toggle--nested) .vt-studio-value-toggle__face {
-  background: var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) !important;
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  -webkit-text-stroke-color: #000 !important;
-}
-html body .vt-studio-value-toggle--double .vt-studio-value-toggle__double-side:first-child .vt-studio-value-toggle__face {
-  background: var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) !important;
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  -webkit-text-stroke-color: #000 !important;
-}
-/* Preserve the explicit V1/V2 right-side appearance axis. */
-html body .vt-studio-value-toggle--double[data-right-appearance="primary"] .vt-studio-value-toggle__double-side:last-child .vt-studio-value-toggle__face {
-  background: var(--pair-a, #36e0f6) !important;
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  -webkit-text-stroke-color: #000 !important;
-}
-html body .vt-studio-value-toggle--double[data-right-appearance="secondary"] .vt-studio-value-toggle__double-side:last-child .vt-studio-value-toggle__face {
-  background: var(--pair-b, #ff7f6b) !important;
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  -webkit-text-stroke-color: #000 !important;
-}
-html body .vt-studio-value-toggle--double[data-right-appearance="black-primary-text"] .vt-studio-value-toggle__double-side:last-child .vt-studio-value-toggle__face {
-  background: #000 !important;
-  color: var(--pair-a, #36e0f6) !important;
-  -webkit-text-fill-color: var(--pair-a, #36e0f6) !important;
-  -webkit-text-stroke-color: var(--pair-a, #36e0f6) !important;
-}
-html body .vt-studio-value-toggle--side .vt-studio-value-toggle__arrow-stack,
-html body .vt-studio-value-toggle--double .vt-studio-value-toggle__arrow-stack {
-  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) !important;
-}
-html body .vt-studio-value-toggle--side .vt-studio-value-toggle__arrow,
-html body .vt-studio-value-toggle--double .vt-studio-value-toggle__arrow {
-  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) !important;
-  color: #000 !important;
-}
-html body .vt-studio-value-toggle--side .vt-studio-value-toggle__arrow svg,
-html body .vt-studio-value-toggle--double .vt-studio-value-toggle__arrow svg {
-  color: #000 !important;
-  stroke: #000 !important;
-}
-/* Keep the horizontal split between the two arrow buttons a single black stroke. */
-html body .vt-studio-value-toggle--side .vt-studio-value-toggle__arrow-stack::after {
-  background: #000 !important;
-}
 /* Split rails: outer-face 1×1, full shell height — no inset square, no vertical gap.
    (Replaces PR #923 distill rules that used align-self:center + height-2*stroke.) */
 html body [data-vt-studio-control="true"][data-vt-studio-split] > [data-vt-studio-split-rail],

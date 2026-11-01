@@ -107,52 +107,6 @@ button[data-vt-studio-control="true"].vt-studio-44-choice.is-color-swap[aria-che
 }
 
 
-/* Supreme + Mini double-split slider counter rails: keep the two button faces
-   flush to the rail edge, matching the other size tiers. The central field
-   remains secondary; both counter faces remain primary with one shared divider. */
-.vt-studio-double-split-slider.is-counter-controls:is([data-size="supreme"], [data-size="mini"]) {
-  --vt-studio-split-rail-size: calc(var(--vt-studio-control-height) - 2 * var(--vt-studio-control-stroke));
-}
-.vt-studio-double-split-slider.is-counter-controls:is([data-size="supreme"], [data-size="mini"]) > .vt-studio-double-split-slider__rail {
-  box-sizing: border-box !important;
-  width: var(--vt-studio-split-rail-size) !important;
-  min-width: var(--vt-studio-split-rail-size) !important;
-  max-width: var(--vt-studio-split-rail-size) !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  align-self: stretch !important;
-  background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6)) !important;
-}
-.vt-studio-double-split-slider.is-counter-controls:is([data-size="supreme"], [data-size="mini"]) .vt-studio-double-split-slider__counter {
-  display: grid !important;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) !important;
-  box-sizing: border-box !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  gap: 0 !important;
-  background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6)) !important;
-}
-.vt-studio-double-split-slider.is-counter-controls:is([data-size="supreme"], [data-size="mini"]) .vt-studio-double-split-slider__counter > button {
-  box-sizing: border-box !important;
-  display: grid !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6)) !important;
-}
-
-
 /* Canonical open dropdown menu contract: detached panel, top-rounded shell, white unselected rows. */
 .vt-studio-dropdown-menu {
   top: calc(100% + 8px);
@@ -186,3 +140,173 @@ button[data-vt-studio-control="true"].vt-studio-44-choice.is-color-swap[aria-che
   outline-offset: -5px;
 }
 .vt-studio-dropdown-menu > .vt-studio-dropdown-option:disabled { cursor: not-allowed; opacity: .45; }
+
+
+/* Badge shells explicitly reserve square icon rails at the left and, for double badges, both ends. */
+.vt-studio-split-shell.vt-studio-split-left-badge,
+.vt-studio-split-shell.vt-studio-double-split-badge {
+  display: grid !important;
+  align-items: stretch;
+  gap: 0;
+}
+.vt-studio-split-shell.vt-studio-split-left-badge[data-vt-studio-split="left"] {
+  grid-template-columns: var(--vt-studio-control-height, 44px) minmax(0, 1fr) !important;
+}
+.vt-studio-split-shell.vt-studio-double-split-badge[data-vt-studio-split="double"] {
+  grid-template-columns: var(--vt-studio-control-height, 44px) minmax(0, 1fr) var(--vt-studio-control-height, 44px) !important;
+}
+.vt-studio-split-shell:is(.vt-studio-split-left-badge, .vt-studio-double-split-badge) > [data-vt-studio-split-rail] {
+  position: relative !important;
+  z-index: 2 !important;
+  display: grid !important;
+  place-items: center;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: var(--vt-studio-control-height, 44px) !important;
+  min-width: var(--vt-studio-control-height, 44px) !important;
+  max-width: var(--vt-studio-control-height, 44px) !important;
+  height: 100%;
+  align-self: stretch;
+  overflow: hidden;
+}
+.vt-studio-split-shell:is(.vt-studio-split-left-badge, .vt-studio-double-split-badge) > [data-vt-studio-split-rail] > svg {
+  display: block !important;
+  width: min(var(--vt-studio-control-icon-size, 38px), 100%);
+  height: min(var(--vt-studio-control-icon-size, 38px), 100%);
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Selection-control dimensions are ratios of the 44px standard specimen.
+   The active background is the visible control face, not just the moving handle. */
+button[data-vt-studio-control="true"].vt-studio-44-switch {
+  box-sizing: border-box;
+  width: calc(var(--vt-studio-control-height, 44px) * 1.72) !important;
+  min-width: calc(var(--vt-studio-control-height, 44px) * 1.72) !important;
+  max-width: calc(var(--vt-studio-control-height, 44px) * 1.72) !important;
+  height: var(--vt-studio-control-height, 44px) !important;
+  min-height: var(--vt-studio-control-height, 44px) !important;
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, white) !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+button[data-vt-studio-control="true"].vt-studio-44-switch.is-round { border-radius: 999px !important; }
+button[data-vt-studio-control="true"].vt-studio-44-switch.is-rect {
+  border-radius: calc(var(--vt-studio-control-height, 44px) * .1666666667) !important;
+}
+.vt-studio-44-switch[data-vt-studio-control="true"] .vt-studio-44-handle {
+  top: calc(var(--vt-studio-control-height, 44px) * .0833333333) !important;
+  left: calc(var(--vt-studio-control-height, 44px) * .0833333333) !important;
+  width: calc(var(--vt-studio-control-height, 44px) * .8333333333) !important;
+  height: calc(var(--vt-studio-control-height, 44px) * .8333333333) !important;
+}
+.vt-studio-44-switch[data-vt-studio-control="true"].is-on .vt-studio-44-handle {
+  transform: translateX(calc(var(--vt-studio-control-height, 44px) * .72)) !important;
+}
+.vt-studio-44-switch[data-vt-studio-control="true"].is-rect .vt-studio-44-handle {
+  border-radius: calc(var(--vt-studio-control-height, 44px) * .0833333333);
+}
+
+button[data-vt-studio-control="true"].vt-studio-44-choice {
+  box-sizing: border-box;
+  width: var(--vt-studio-control-height, 44px) !important;
+  min-width: var(--vt-studio-control-height, 44px) !important;
+  max-width: var(--vt-studio-control-height, 44px) !important;
+  height: var(--vt-studio-control-height, 44px) !important;
+  min-height: var(--vt-studio-control-height, 44px) !important;
+  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) 50%, white) !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+button[data-vt-studio-control="true"].vt-studio-44-choice.is-round { border-radius: 50% !important; }
+button[data-vt-studio-control="true"].vt-studio-44-choice.is-rect {
+  border-radius: calc(var(--vt-studio-control-height, 44px) * .1666666667) !important;
+}
+.vt-studio-44-choice[data-vt-studio-control="true"] .vt-studio-44-dot {
+  width: 75% !important;
+  height: 75% !important;
+  max-width: 75%;
+  max-height: 75%;
+}
+button[data-vt-studio-control="true"].vt-studio-44-switch:is(.is-on, .is-checked, [aria-checked="true"]),
+button[data-vt-studio-control="true"].vt-studio-44-choice:is(.is-on, .is-checked, [aria-checked="true"]) {
+  background: var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) !important;
+}
+button[data-vt-studio-control="true"].vt-studio-44-switch.is-color-swap:is(.is-on, .is-checked, [aria-checked="true"]),
+button[data-vt-studio-control="true"].vt-studio-44-choice.is-color-swap:is(.is-on, .is-checked, [aria-checked="true"]) {
+  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) !important;
+}
+
+
+/* Regression recovery: icon-button perimeter and selected palette ownership. */
+button[data-vt-studio-icon-button="true"]:not(.vt-studio-square-icon-button-group > button),
+button.vt-studio-square-icon-button:not(.vt-studio-square-icon-button-group > button) {
+  border: var(--vt-studio-control-stroke, 3px) solid #000;
+  border-radius: var(--vt-studio-control-radius, 6px);
+}
+button[data-vt-studio-circle-icon-button="true"] {
+  border-radius: 50%;
+}
+.vt-studio-square-icon-button-group > [data-vt-studio-icon-button="true"][aria-pressed="true"],
+.vt-studio-square-icon-button-group > button[aria-pressed="true"] {
+  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) !important;
+}
+.vt-studio-square-icon-button-group > [data-vt-studio-icon-button="true"][aria-pressed="true"] > [data-vt-studio-button-face],
+.vt-studio-square-icon-button-group > button[aria-pressed="true"] > [data-vt-studio-button-face] {
+  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)) !important;
+}
+
+/* Selected play/pause keeps the icon rail primary; only its text face swaps. */
+button[data-vt-studio-play-pause="true"][aria-pressed="true"] [data-vt-studio-split-rail][data-rail="start"] {
+  background: var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) !important;
+}
+
+/* Restore the top-split header's visible horizontal separator. The prior
+ * transparent collapsed-header rule matched every top-split module.
+ */
+.vt-studio-top-split-module > .vt-studio-top-split-module__head {
+  border-bottom: var(--vt-top-split-stroke, 3px) solid #000 !important;
+}
+.vt-studio-top-split-module:not(.vt-studio-collapsing-split-module) > .vt-studio-top-split-module__head {
+  border-bottom-color: #000 !important;
+}
+
+/* A closed module's bottom edge is raised by exactly one outer stroke. */
+.vt-studio-collapsing-split-module:not([open]) {
+  border-bottom-width: var(--vt-top-split-stroke, 3px);
+}
+.vt-studio-collapsing-split-module:not([open]) > .vt-studio-collapsing-split-module__head {
+  border-bottom-color: transparent !important;
+  margin-bottom: calc(-1 * var(--vt-top-split-stroke, 3px));
+}
+
+/* Intermodules and their host are edge-to-edge: no inherited horizontal inset. */
+[data-vt-studio-inter-host="true"],
+[data-vt-studio-inter-host="true"] > .vt-studio-inter-module,
+.vt-studio-inter-module {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+  padding-inline: 0 !important;
+}
+
+/* Default double-split slider palette is the inverse of the prior rail scheme. */
+/* Slider palette and counter faces are owned by the canonical split/counter family sheets. */
+
+
+/* Restore the outer vertical edges after the earlier zero-side-border reset. */
+.vt-studio-inter-module {
+  border-left: var(--vt-im-stroke, var(--vt-studio-control-stroke, 3px)) solid #000 !important;
+  border-right: var(--vt-im-stroke, var(--vt-studio-control-stroke, 3px)) solid #000 !important;
+}
+.vt-studio-top-split-module:not([data-open="true"]) > .vt-studio-top-split-module__head {
+  border-bottom-color: #000 !important;
+}
+.vt-studio-collapsing-split-module:not([open]) > .vt-studio-collapsing-split-module__head {
+  border-bottom-color: #000 !important;
+}
+/* Side-counter divider geometry is defined by its canonical split-shell family. */
+
+
+/* The outer button owns the only perimeter; the inner face never draws a second border. */

@@ -1,8 +1,12 @@
 /* Collapsible Confirmed Primitive Library modules. */
 .vt-confirmed-family-module,
 .vt-confirmed-primitive-module {
+  display: block;
   box-sizing: border-box;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  justify-self: stretch;
   margin: 0 0 8px;
   border: 3px solid #000;
   border-radius: 6px;
@@ -33,7 +37,7 @@
 .vt-confirmed-family-module:not([open]) > summary,
 .vt-confirmed-family-module:not([open]) .vt-confirmed-family-module__top,
 .vt-confirmed-primitive-module:not([open]) > summary { border-bottom: 0; }
-.vt-confirmed-family-module__body { display: grid; gap: 6px; padding: 8px; }
+.vt-confirmed-family-module__body { display: grid; gap: 6px; padding: 8px; width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
 .vt-confirmed-primitive-module {
   margin: 0;
   border-width: 2px;
@@ -240,3 +244,61 @@
   text-transform: uppercase;
 }
 .vt-confirmed-representative-heading:first-child { margin-top: 0; }
+
+
+/* Confirmed library mobile containment: module cards must fit the toolbox column.
+   Keep module and specimen wrappers shrinkable at every nested grid boundary. */
+.vt-confirmed-catalog,
+.vt-confirmed-catalog > *,
+.vt-confirmed-family-grid,
+.vt-confirmed-family-grid > *,
+.vt-confirmed-family-module,
+.vt-confirmed-primitive-module,
+.vt-confirmed-family,
+.vt-confirmed-family-module__body,
+.vt-confirmed-primitive-module__body,
+.vt-confirmed-primitive-body,
+.vt-confirmed-variants {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.vt-confirmed-family-grid,
+.vt-confirmed-family-module__body,
+.vt-confirmed-primitive-module__body,
+.vt-confirmed-primitive-body,
+.vt-confirmed-variants {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.vt-confirmed-family-module,
+.vt-confirmed-primitive-module,
+.vt-confirmed-family {
+  justify-self: stretch;
+  grid-column: 1 / -1;
+}
+.vt-confirmed-variants > *,
+.vt-confirmed-primitive-body > *,
+.vt-confirmed-family-module__body > *,
+.vt-confirmed-primitive-module__body > * {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 720px) {
+  .vt-confirmed-catalog,
+  .vt-confirmed-family-grid,
+  .vt-confirmed-family-module,
+  .vt-confirmed-primitive-module,
+  .vt-confirmed-family,
+  .vt-confirmed-family-module__body,
+  .vt-confirmed-primitive-module__body,
+  .vt-confirmed-primitive-body,
+  .vt-confirmed-variants {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -4,18 +4,17 @@ textarea[data-vt-studio-control="true"],
 [data-vt-studio-control="true"] input,
 [data-vt-studio-control="true"] textarea {
   box-sizing: border-box;
-  border: 0;
-  -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) var(--vt-field-primary);
-  outline: 0 solid transparent;
-  box-shadow: none;
+  border: var(--vt-studio-control-stroke, 3px) solid var(--vt-studio-control-accent, var(--pair-a));
+  outline: none;
+
 }
-input[data-vt-studio-control="true"]:not(.vt-studio-split-text-input__field):focus-visible,
+input[data-vt-studio-control="true"]:focus-visible,
 textarea[data-vt-studio-control="true"]:focus-visible,
-[data-vt-studio-control="true"] input:not(.vt-studio-split-text-input__field):focus-visible,
+[data-vt-studio-control="true"] input:focus-visible,
 [data-vt-studio-control="true"] textarea:focus-visible {
-  outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, .65)) solid var(--vt-studio-control-secondary, var(--pair-b));
+  outline: calc(var(--vt-studio-control-stroke, 3px) * .65) solid var(--vt-studio-control-secondary, var(--pair-b));
   outline-offset: 0;
-  box-shadow: none;
+
 }
 
 
@@ -29,41 +28,58 @@ textarea[data-vt-studio-control="true"]:focus-visible,
   box-sizing: border-box;
   border: var(--vt-studio-control-stroke, 3px) solid #000;
   border-radius: var(--vt-studio-control-radius, 6px);
-  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity, 50%), transparent);
+  background: var(--vt-field-fill-rest, color-mix(in srgb, white 50%, var(--vt-field-primary) 50%));
   color: var(--vt-field-primary);
   -webkit-text-fill-color: var(--vt-field-primary);
   caret-color: var(--vt-field-primary);
-  background-color: color-mix(in srgb, var(--vt-field-primary) 50%, transparent);
   font-family: var(--vt-studio-control-font-family, Inter, ui-sans-serif, system-ui, sans-serif);
   font-weight: var(--vt-studio-control-font-weight, 1000);
   text-transform: var(--vt-studio-control-text-transform, uppercase);
   letter-spacing: var(--vt-studio-control-letter-spacing, -0.02em);
-  outline: 0 solid transparent;
-  box-shadow: none;
+  outline: none;
+
 }
 
-/* Textareas inherit the same input typography tokens and shared default line-height. */
+/* Multiline text keeps its own type size and thin text stroke at every state. */
 html body textarea[data-vt-studio-control="true"],
 html body [data-vt-studio-control="true"] textarea {
-  line-height: 1;
+  font-size: var(--vt-studio-textarea-standard-font-size, 18px);
+  line-height: var(--vt-studio-textarea-standard-line-height, 1.25);
+  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, 0.5px) var(--vt-field-primary, var(--pair-a, #36e0f6));
   min-height: var(--vt-studio-textarea-min-height, 92px);
   resize: vertical;
 }
+html body textarea[data-vt-studio-control="true"][data-size="compact"],
+html body [data-vt-studio-control="true"] textarea[data-size="compact"] {
+  font-size: var(--vt-studio-textarea-compact-font-size, 14px);
+  line-height: var(--vt-studio-textarea-compact-line-height, 1.3);
+  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, 0.35px) var(--vt-field-primary, var(--pair-a, #36e0f6));
+}
 
 /* Focused entered text is black; the control outline remains secondary. */
-[data-vt-studio-control="true"] input:not(.vt-studio-split-text-input__field):not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
-input[data-vt-studio-control="true"]:not(.vt-studio-split-text-input__field):not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+[data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
 textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
 [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
   color: #000;
   -webkit-text-fill-color: #000;
-  -webkit-text-stroke-color: #000;
-  caret-color: var(--vt-field-primary, var(--pair-a, #36e0f6));
-  background-color: color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, transparent);
-  outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, 0.65)) solid var(--vt-field-secondary, var(--pair-b, #ff7f6b));
+  outline: calc(var(--vt-studio-control-stroke, 3px) * 0.65) solid var(--vt-field-secondary, var(--pair-b, #ff7f6b));
   outline-offset: 0;
-  box-shadow: none;
+
 }
+[data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible) {
+  -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) #000;
+}
+textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+[data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
+  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, 0.5px) #000;
+}
+textarea[data-vt-studio-control="true"][data-size="compact"]:is(:focus, :focus-visible),
+[data-vt-studio-control="true"] textarea[data-size="compact"]:is(:focus, :focus-visible) {
+  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, 0.35px) #000;
+}
+
 /* Floating label chip follows black focused/raised typography without repainting the field outline. */
 .vt-studio-floating-field > :is(input, textarea):is(:focus, :focus-visible) + .vt-studio-floating-field-label,
 .vt-studio-floating-field > :is(input, textarea):not(:placeholder-shown) + .vt-studio-floating-field-label {
@@ -82,8 +98,17 @@ textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
    - Input:    38 / 24 / 10 on <input> only
    ============================================================================= */
 
-/* No textarea font-size overrides: all sizes follow shared input tokens.
-   The textarea uses the shared default line-height. */
+/* Textarea only — never use these tokens on <input>. */
+html body textarea[data-vt-studio-control="true"],
+html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"] {
+  font-size: var(--vt-studio-textarea-standard-font-size, 18px);
+  line-height: var(--vt-studio-textarea-standard-line-height, 1.25);
+}
+html body textarea[data-vt-studio-control="true"][data-size="compact"],
+html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="compact"] {
+  font-size: var(--vt-studio-textarea-compact-font-size, 14px);
+  line-height: var(--vt-studio-textarea-compact-line-height, 1.3);
+}
 
 /* Primary inline glyph strokes — independent from the black field border.
    Support both controls marked directly and fields nested in a Studio wrapper. */
@@ -98,255 +123,80 @@ html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type=
 html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   -webkit-text-stroke-width: var(--vt-studio-control-text-stroke, 1px);
 }
+html body textarea[data-vt-studio-control="true"],
+html body [data-vt-studio-control="true"] textarea {
+  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, 0.5px) var(--vt-field-primary, var(--pair-a, #36e0f6));
+}
+html body textarea[data-vt-studio-control="true"][data-size="compact"],
+html body [data-vt-studio-control="true"] textarea[data-size="compact"] {
+  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, 0.35px) var(--vt-field-primary, var(--pair-a, #36e0f6));
+}
 
+/* Focus changes only the glyph stroke to black; keep the secondary outline. */
+html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
+  -webkit-text-stroke-color: #000;
+}
 
-/* Unified text-field focus transition: retain the secondary outline while blur fades it away. */
-[data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-[data-vt-studio-control="true"] textarea,
-textarea[data-vt-studio-control="true"] {
+/* Text fields share the counter/slider 500ms outline fade and 65%-stroke secondary outline. */
+html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html body textarea[data-vt-studio-control="true"],
+html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html body [data-vt-studio-control="true"] textarea {
+  outline: 0 solid transparent;
   outline-offset: var(--vt-studio-focus-outline-offset, 0px);
   transition:
     outline-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
     outline-width var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
     color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-fill-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
     background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
 }
 
-
-/* Canonical multiline typography exception: textareas are 18px / 14px, not input-sized.
- * All values are emitted from STUDIO_CONTROL_SIZE_BASE.multiline in tokens.ts. */
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"],
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"] {
-  font-size: var(--vt-studio-textarea-standard-font-size, 18px);
-  font-weight: var(--vt-studio-textarea-font-weight, 1000);
-  line-height: var(--vt-studio-textarea-line-height, .85);
-  min-height: var(--vt-studio-textarea-min-height, 92px);
-  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, 0.5px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="supreme"],
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="supreme"] {
-  font-size: var(--vt-studio-textarea-supreme-font-size, 24.55px);
-  -webkit-text-stroke: var(--vt-studio-textarea-supreme-text-stroke, 0.68px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="compact"],
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="compact"] {
-  font-size: var(--vt-studio-textarea-compact-font-size, 14px);
-  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, 0.35px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="mini"],
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="mini"] {
-  font-size: var(--vt-studio-textarea-mini-font-size, 17.5px);
-  -webkit-text-stroke: var(--vt-studio-textarea-mini-text-stroke, 0.4px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="micro"],
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="micro"] {
-  font-size: var(--vt-studio-textarea-micro-font-size, 10px);
-  -webkit-text-stroke: var(--vt-studio-textarea-micro-text-stroke, 0.4px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"]::placeholder,
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"]::placeholder {
-  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, 0.5px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="compact"]::placeholder,
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="compact"]::placeholder {
-  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, 0.35px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="compact"]:is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="compact"]:is(:focus, :focus-visible) {
-  -webkit-text-stroke-width: var(--vt-studio-textarea-compact-text-stroke, 0.35px);
+html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
+  outline: var(--vt-studio-focus-outline-width, calc(var(--vt-studio-control-stroke, 3px) * 0.65)) solid var(--vt-studio-focus-outline-color, var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)));
+  outline-offset: var(--vt-studio-focus-outline-offset, 0px);
+  color: var(--vt-studio-number-active-color, #000000);
+  -webkit-text-fill-color: var(--vt-studio-number-active-color, #000000);
 }
 
-/* Fields animate only color/focus paint; geometry and position remain stationary. */
-html body :is(input, textarea, select)[data-vt-studio-control="true"],
-html body [data-vt-studio-control="true"] :is(input, textarea, select) {
+/* Textarea focus paint and text-box inset are finalized here, after shared field rules. */
+html body textarea[data-vt-studio-control="true"],
+html body [data-vt-studio-control="true"] textarea {
   transition:
-    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
-    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
     background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-fill-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
     outline-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
     outline-width var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
 }
-
-
-.vt-studio-floating-field > textarea[data-size="standard"] + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-standard-font-size, 18px);
-  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, 0.5px) currentColor;
-}
-.vt-studio-floating-field > textarea[data-size="compact"] + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-compact-font-size, 14px);
-  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, 0.35px) currentColor;
-}
-.vt-studio-floating-field > input[data-size="standard"] + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-44-font-size, 38px);
-  -webkit-text-stroke: var(--vt-studio-44-text-stroke, 1px) currentColor;
-}
-.vt-studio-floating-field > input[data-size="compact"] + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-28-font-size, 24px);
-  -webkit-text-stroke: var(--vt-studio-28-text-stroke, 0.5px) currentColor;
-}
-.vt-studio-floating-field > :is(input, textarea):is(:focus, :focus-visible) + .vt-studio-floating-field-label,
-.vt-studio-floating-field > :is(input, textarea):not(:placeholder-shown) + .vt-studio-floating-field-label {
-  font-size: 18px;
-  line-height: 1;
-}
-
-/* Final shared input/textarea parity contract: same 50% resting fill, 15% focus
-   fill, black focused glyph fill/stroke, and a zero-offset secondary outline. */
-html body input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-html body textarea[data-vt-studio-control="true"],
-html body [data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-html body [data-vt-studio-control="true"] textarea {
-  background-color: color-mix(in srgb, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) var(--vt-studio-control-default-fill-opacity, 50%), transparent);
-}
-/* Textbox wrappers use the textarea field contract, including a primary inline stroke. */
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="text-box"],
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="textbox"] {
-  -webkit-text-stroke-width: var(--vt-studio-control-text-stroke, 1px);
-  border: var(--vt-studio-control-stroke, 3px) solid #000;
-  border-radius: var(--vt-studio-control-radius, 6px);
-}
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="text-box"]:is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="textbox"]:is(:focus, :focus-visible) {
-  -webkit-text-stroke-width: var(--vt-studio-control-text-stroke, 1px);
-}
-
-
-/* Focus contract: black text and glyph stroke, 15% primary fill, secondary outline. */
-/* Text fields and textarea wrappers: black fill/stroke on focus, secondary outline. */
-/* Read-only text-box display copy and editable fields share black focus glyphs;
-   editable caret color remains primary through the shared field tokens. */
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="text-box"]:is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="textbox"]:is(:focus, :focus-visible) {
+html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, white 85%, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) 15%));
   color: var(--vt-field-text-focus, #000);
   -webkit-text-fill-color: var(--vt-field-text-focus, #000);
   -webkit-text-stroke-color: var(--vt-field-text-stroke-focus, #000);
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width, var(--vt-studio-control-text-stroke, 1px));
-  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, transparent));
-  outline: var(--vt-field-focus-outline, calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, 0.65)) solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)));
+  outline: var(--vt-field-focus-outline, calc(var(--vt-studio-control-stroke, 3px) * .65) solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b)));
   outline-offset: 0;
-  box-shadow: none;
   caret-color: var(--vt-field-caret-focus, var(--vt-field-primary, var(--pair-a, #36e0f6)));
 }
-/* Raised floating labels follow the focused field's black glyph treatment. */
-.vt-studio-floating-field > :is(input, textarea):is(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  color: #000;
-  -webkit-text-stroke-color: #000 !important;
+/* Text boxes keep a black outer perimeter plus a visible primary inset ring. */
+html body .vt-studio-text-box[data-vt-studio-control="true"],
+html body [data-vt-studio-control="true"].vt-studio-text-box {
+  box-sizing: border-box;
+  border: var(--vt-studio-control-stroke, 3px) solid #000;
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)));
 }
-
-
-/* Canonical token-driven editable field defaults: text and glyph stroke always match. */
-input[data-vt-studio-control="true"]:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-textarea[data-vt-studio-control="true"],
-[data-vt-studio-control="true"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-[data-vt-studio-control="true"] textarea {
-  color: var(--vt-field-text);
-  -webkit-text-fill-color: var(--vt-field-text);
-  -webkit-text-stroke-color: var(--vt-field-text-stroke);
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width);
-  background-color: var(--vt-field-fill-rest);
-  caret-color: var(--vt-field-text);
-}
-input[data-vt-studio-control="true"]:not(.vt-studio-split-text-input__field):not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
-textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
-[data-vt-studio-control="true"] input:not(.vt-studio-split-text-input__field):not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
-[data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
-  color: var(--vt-field-text-focus);
-  -webkit-text-fill-color: var(--vt-field-text-focus);
-  -webkit-text-stroke-color: var(--vt-field-text-stroke-focus);
-  -webkit-text-stroke-width: var(--vt-field-text-stroke-width);
-  background-color: var(--vt-field-fill-focus);
-  caret-color: var(--vt-field-caret-focus);
-  outline: var(--vt-field-focus-outline);
-  outline-offset: 0;
-  box-shadow: none;
-}
-
-
-/* Mini is a first-class multiline field tier; preserve primary glyph stroke and 0.85 line height. */
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="mini"],
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="mini"] {
-  font-size: var(--vt-studio-textarea-mini-font-size, 17.5px);
-  line-height: var(--vt-studio-textarea-line-height, .85);
-  padding: var(--vt-studio-textarea-compact-padding-block, 8px) var(--vt-studio-textarea-compact-padding-inline, 10px);
-  -webkit-text-stroke: var(--vt-studio-textarea-mini-text-stroke, .375px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="mini"]::placeholder,
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="mini"]::placeholder {
-  -webkit-text-stroke: var(--vt-studio-textarea-mini-text-stroke, .375px) var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size="mini"]:is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"] textarea[data-vt-studio-field-kind="textarea"][data-size="mini"]:is(:focus, :focus-visible) {
-  -webkit-text-stroke-color: var(--vt-field-primary, var(--pair-a, #36e0f6));
-  -webkit-text-stroke-width: var(--vt-studio-textarea-mini-text-stroke, .375px);
-}
-
-
-/* Resting floating labels track the selected tier; raised labels remain the shared 12px chip. */
-.vt-studio-floating-field > input[data-size="supreme"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-supreme-font-size, 51.82px);
-  -webkit-text-stroke: var(--vt-studio-supreme-text-stroke, 1.36px) currentColor;
-}
-.vt-studio-floating-field > input[data-size="standard"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-standard-font-size, 38px);
-  -webkit-text-stroke: var(--vt-studio-standard-text-stroke, 1px) currentColor;
-}
-.vt-studio-floating-field > input[data-size="compact"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-compact-font-size, 24px);
-  -webkit-text-stroke: var(--vt-studio-compact-text-stroke, .5px) currentColor;
-}
-.vt-studio-floating-field > input[data-size="mini"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-mini-font-size, 17.5px);
-  -webkit-text-stroke: var(--vt-studio-mini-text-stroke, .375px) currentColor;
-}
-.vt-studio-floating-field > input[data-size="micro"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-micro-font-size, 10px);
-  -webkit-text-stroke: var(--vt-studio-micro-text-stroke, .25px) currentColor;
-}
-.vt-studio-floating-field > textarea[data-size="supreme"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-supreme-font-size, 24.55px);
-  -webkit-text-stroke: var(--vt-studio-textarea-supreme-text-stroke, .68px) currentColor;
-}
-.vt-studio-floating-field > textarea[data-size="standard"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-standard-font-size, 18px);
-  -webkit-text-stroke: var(--vt-studio-textarea-standard-text-stroke, .5px) currentColor;
-}
-.vt-studio-floating-field > textarea[data-size="compact"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-compact-font-size, 14px);
-  -webkit-text-stroke: var(--vt-studio-textarea-compact-text-stroke, .35px) currentColor;
-}
-.vt-studio-floating-field > textarea[data-size="mini"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-mini-font-size, 17.5px);
-  -webkit-text-stroke: var(--vt-studio-textarea-mini-text-stroke, .375px) currentColor;
-}
-.vt-studio-floating-field > textarea[data-size="micro"]:placeholder-shown:not(:focus, :focus-visible) + .vt-studio-floating-field-label {
-  font-size: var(--vt-studio-textarea-micro-font-size, 10px);
-  -webkit-text-stroke: var(--vt-studio-textarea-micro-text-stroke, .25px) currentColor;
-}
-
-
-/* Simple inputs inherit the shared default/focus glyph-color contract above. */
-/* Labelled/editable inputs and all textareas use black glyph stroke while focused. */
-html body input.vt-studio-text-input:not(.vt-studio-text-input--simple)[data-vt-studio-control="true"]:is(:focus, :focus-visible),
-html body input[data-vt-studio-field-kind="text-input"][data-vt-studio-control="true"]:is(:focus, :focus-visible):not(.vt-studio-text-input--simple),
-html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
-html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
-  color: #000;
-  -webkit-text-fill-color: #000;
-  -webkit-text-stroke-color: #000 !important;
-}
-/* Read-only TextBox uses black text and a matching black inline stroke at rest. */
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="text-box"],
-html body [data-vt-studio-control="true"][data-vt-studio-field-kind="textbox"] {
-  color: #000;
-  -webkit-text-fill-color: #000;
-  -webkit-text-stroke-color: #000 !important;
-}
-
-/* State color wins over every size-specific glyph-width declaration. */
-html body input[data-vt-studio-control="true"][data-size]:not([type="checkbox"]):not([type="radio"]):not([type="range"]):is(:focus, :focus-visible),
-html body textarea[data-vt-studio-control="true"][data-vt-studio-field-kind="textarea"][data-size]:is(:focus, :focus-visible) {
-  color: #000;
-  -webkit-text-fill-color: #000;
-  -webkit-text-stroke-color: #000;
+html body .vt-studio-text-box[data-vt-studio-control="true"]:is(:focus, :focus-visible),
+html body [data-vt-studio-control="true"].vt-studio-text-box:is(:focus, :focus-visible) {
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, white 85%, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%));
+  color: var(--vt-field-text-focus, #000);
+  -webkit-text-fill-color: var(--vt-field-text-focus, #000);
+  -webkit-text-stroke-color: var(--vt-field-text-stroke-focus, #000);
 }

@@ -5,6 +5,7 @@ import test from "node:test"
 const component = readFileSync("src/studio-ui/primitives/StudioControls.tsx", "utf8")
 const valueToggles = readFileSync("src/studio-ui/primitives/StudioValueToggles.tsx", "utf8")
 const styles = readFileSync("src/styles/studio-control-system.css", "utf8")
+const valueToggleStyles = readFileSync("src/styles/studio-control-value-toggles.css", "utf8")
 const distill = readFileSync("src/styles/studio-control-distill-overrides.css", "utf8")
 const recovery = readFileSync("src/styles/studio-control-recovery-overrides.css", "utf8")
 const wordCounter = readFileSync("src/styles/studio-control-word-counter.css", "utf8")
@@ -67,7 +68,7 @@ test("counter palette variants use centered per-size pairs, tokenized numeral ti
   assert.equal((catalog.match(/max={100}/g) || []).length >= 12, true);
   assert.match(styles, /--vt-studio-number-rest-color:\s*color-mix\(in srgb,[^;]*var\(--vt-studio-number-rest-mix\)/);
   assert.match(styles, /\.vt-studio-counter__value,[\s\S]*?color:\s*color-mix\(in srgb, #fff var\(--vt-studio-number-default-white-mix, 50%\), var\(--vt-studio-number-background, var\(--pair-a\)\)\)/);
-  assert.match(styles, /\.vt-studio-counter\.is-reversed[\s\S]*?--vt-studio-number-background:\s*var\(--pair-b\)/);
+  assert.doesNotMatch(styles, /\.vt-studio-(?:counter|side-counter|left-counter|double-split-slider)\.is-reversed/);
   assert.match(styles, /background:\s*color-mix\(in srgb, var\(--pair-a\) 50%, transparent\)/);
   assert.match(catalogStyles, /\.vt-confirmed-counter-size-rows\s*\{[^}]*display:\s*grid/s);
   assert.match(catalogStyles, /\.vt-confirmed-counter-pair,[\s\S]*?\.vt-confirmed-slider-pair\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/s);
@@ -88,14 +89,20 @@ test("Studio counter hold behavior is wired to pointer events for touch and mous
   assert.match(styles, /-webkit-text-stroke:\s*var\(--vt-studio-control-text-stroke, 1px\) var\(--vt-studio-number-active-stroke, #000\)/);
 });
 
-test("slider counter click handlers preserve the shared hold hook's click behavior and interaction focus", () => {
+test("controlled counter and slider use the shared interaction-focus-aware hold hook", () => {
+  const counterStart = component.indexOf("export const StudioCounter:");
+  const counterEnd = component.indexOf("StudioCounter.displayName", counterStart);
+  const counter = component.slice(counterStart, counterEnd);
   const sliderStart = component.indexOf("export const StudioDoubleSplitSlider:");
   const sliderEnd = component.indexOf("StudioDoubleSplitSlider.displayName", sliderStart);
   const slider = component.slice(sliderStart, sliderEnd);
-  assert.match(slider, /increment\.events\.onClick\(event\); interactionFocus\.pulse\(\)/);
-  assert.match(slider, /decrement\.events\.onClick\(event\); interactionFocus\.pulse\(\)/);
-  assert.doesNotMatch(slider, /\.\.\.increment\.events\} onClick=\{interactionFocus\.pulse\}/);
-  assert.doesNotMatch(slider, /\.\.\.decrement\.events\} onClick=\{interactionFocus\.pulse\}/);
+  assert.match(counter, /useStudioCounterHold\(-1,[\s\S]*?interactionFocus/);
+  assert.match(counter, /useStudioCounterHold\(1,[\s\S]*?interactionFocus/);
+  assert.match(slider, /useStudioCounterHold\(-1,[\s\S]*?interactionFocus/);
+  assert.match(slider, /useStudioCounterHold\(1,[\s\S]*?interactionFocus/);
+  assert.match(component, /interactionFocus\?\.pulse\(\); adjust\(direction\)/);
+  assert.match(component, /interactionFocus\?\.start\(\)/);
+  assert.match(component, /interactionFocus\?\.end\(\)/);
 });
 
 test("Studio counter and counter-slider press-and-hold are wired for touch and mouse", () => {
@@ -116,14 +123,23 @@ test("Studio counter and counter-slider press-and-hold are wired for touch and m
 });
 test("both counter styles tint resting numeral fill and stroke against each palette, then use black text while pressed or held", () => {
   assert.match(styles, /\.vt-studio-counter__value,[\s\S]*?color:\s*color-mix\(in srgb, #fff var\(--vt-studio-number-default-white-mix, 50%\), var\(--vt-studio-number-background, var\(--pair-a\)\)\)/);
-  assert.match(styles, /\.vt-studio-counter\.is-reversed \.vt-studio-counter__value,[\s\S]*?--vt-studio-number-background:\s*var\(--pair-b\)[\s\S]*?-webkit-text-stroke-color:\s*currentColor/);
+  assert.doesNotMatch(styles, /\.vt-studio-(?:counter|side-counter|left-counter|double-split-slider)\.is-reversed/);
   assert.match(styles, /\.vt-studio-counter:has\([\s\S]*?color:\s*var\(--vt-studio-number-active-color, #000\);\s*-webkit-text-fill-color:\s*var\(--vt-studio-number-active-color, #000\);\s*-webkit-text-stroke:\s*var\(--vt-studio-control-text-stroke, 1px\) var\(--vt-studio-number-active-stroke, #000\)/);
-  assert.match(styles, /\.vt-studio-counter\.is-reversed:has\([\s\S]*?background:\s*color-mix\(in srgb, var\(--pair-b\) 50%, transparent\);\s*color:\s*var\(--vt-studio-number-active-color, #000\);\s*-webkit-text-fill-color:\s*var\(--vt-studio-number-active-color, #000\);\s*-webkit-text-stroke:\s*var\(--vt-studio-control-text-stroke, 1px\) var\(--vt-studio-number-active-stroke, #000\)/);
+  assert.match(styles, /\.vt-studio-counter:has\([\s\S]*?background:\s*color-mix\(in srgb, var\(--pair-a\) 50%, transparent\)/);
   assert.match(styles, /\.vt-studio-side-counter__value/);
-  assert.match(styles, /\.vt-studio-side-counter\.is-reversed \.vt-studio-side-counter__value[\s\S]*?--vt-studio-number-background:\s*var\(--pair-b\)[\s\S]*?-webkit-text-stroke-color:\s*currentColor/);
+  assert.match(styles, /\.vt-studio-side-counter:has\([\s\S]*?color:\s*var\(--vt-studio-number-active-color, #000\)/);
 });
 
-test("StudioLeftCounter places the two-button action rail on the left and is available for opposite-palette catalog specimens", () => {
+test("confirmed counter and slider specimens do not include inverse-palette variants", () => {
+  assert.doesNotMatch(catalog, /StudioCounter className="is-reversed"/);
+  assert.doesNotMatch(catalog, /StudioSideCounter className="is-reversed"/);
+  assert.doesNotMatch(catalog, /StudioLeftCounter className="is-reversed"/);
+  assert.doesNotMatch(catalog, /StudioDoubleSplitSlider className="is-reversed"/);
+  assert.doesNotMatch(catalog, /StudioDoubleSplitWordCounter className="is-reversed"/);
+  assert.doesNotMatch(catalog, /StudioLeftWordSlider className="is-reversed"/);
+});
+
+test("StudioLeftCounter places the two-button action rail on the left without an inverse-palette variant", () => {
   const start = component.indexOf("export const StudioLeftCounter:");
   const end = component.indexOf("StudioLeftCounter.displayName", start);
   const source = component.slice(start, end);
@@ -136,7 +152,7 @@ test("StudioLeftCounter places the two-button action rail on the left and is ava
   assert.match(styles, /\.vt-studio-left-counter,[\s\S]*?width:\s*100%/)
   assert.doesNotMatch(styles, /vt-studio-counter-width/)
   assert.match(styles, /\.vt-studio-left-counter__rail\[data-rail="start"\]\s*\{[^}]*border-right:/s);
-  assert.match(catalog, /StudioLeftCounter className="is-reversed"/);
+  assert.doesNotMatch(catalog, /StudioLeftCounter className="is-reversed"/);
   assert.doesNotMatch(catalog, /StudioSideCounter className="is-reversed"/);
 });
 
@@ -176,9 +192,9 @@ test("bar toggle exposes a rounded percentage tooltip and preserves visible bars
 
 
 test("bar percentage tooltip escapes the component border and has a downward secondary-color pointer", () => {
-  assert.match(styles, /\.vt-studio-value-toggle--bar\s*\{[^}]*overflow:\s*visible/s);
-  assert.match(styles, /\.vt-studio-split-shell\.vt-studio-value-toggle--bar\s*\{[^}]*overflow:\s*visible/s);
-  assert.match(styles, /\.vt-studio-value-toggle__bar-tooltip::after\s*\{[^}]*border-top:\s*6px solid var\(--vt-studio-control-secondary/s);
+  assert.match(distill, /\.vt-studio-value-toggle--bar\s*\{[^}]*overflow:\s*visible/s);
+  assert.match(distill, /\.vt-studio-split-shell\.vt-studio-value-toggle--bar\s*\{[^}]*overflow:\s*visible/s);
+  assert.match(distill, /\.vt-studio-value-toggle__bar-tooltip::after\s*\{[^}]*border-top:\s*6px solid var\(--vt-studio-control-secondary/s);
 });
 
 test("all counter chevrons use one token-backed button class and shared click/hold animation", () => {
@@ -199,7 +215,8 @@ test("StudioDoubleSplitWordCounter is exported as a double-rail word primitive w
   assert.match(valueToggles, /data-vt-studio-control-kind": "studio-double-split-word-counter"/);
   assert.match(valueToggles, /STUDIO_LEFT_WORD_OPTIONS/);
   assert.match(valueToggles, /vt-studio-word-counter__value/);
-  assert.match(styles, /\.vt-studio-word-counter:focus-within[\s\S]*?--vt-studio-control-secondary/);
+  assert.match(valueToggleStyles, /\.vt-studio-word-counter__button\s*\{[^}]*display:\s*grid/);
+  assert.match(valueToggleStyles, /\.vt-studio-value-toggle:focus-within\s*\{[^}]*outline:/s);
 });
 
 
@@ -233,10 +250,10 @@ test("counter families are independent modules and solid-fill word counter faces
   assert.doesNotMatch(counterFamily, /<ConfirmedStudioSideCounterFamily\s*\/>/);
   assert.match(catalog, /<ConfirmedStudioSideCounterFamily\s*\/>/);
   assert.match(catalog, /title="StudioDoubleSplitWordCounter[\s\S]*?defaultOpen/);
-  assert.match(styles, /\.vt-studio-word-counter\s*>\s*\[data-vt-studio-split-label\]\s*\{[^}]*background:\s*var\(--vt-studio-control-accent/s);
-  assert.doesNotMatch(styles, /\.vt-studio-word-counter\s*>\s*\[data-vt-studio-split-label\][^{]*\{[^}]*50%/s);
-  assert.match(styles, /\.vt-studio-word-counter__value\s*\{[^}]*color:\s*var\(--vt-studio-number-rest-color\)/s);
-  assert.match(styles, /\.vt-studio-counter__value,[\s\S]*?\.vt-studio-word-counter__value\s*\{/s);
+  assert.match(valueToggleStyles, /\.vt-studio-word-counter\s*>\s*\[data-vt-studio-split-label\]\s*\{[^}]*background:\s*var\(--vt-studio-control-accent/s);
+  assert.doesNotMatch(valueToggleStyles, /\.vt-studio-word-counter\s*>\s*\[data-vt-studio-split-label\][^{]*\{[^}]*50%/s);
+  assert.match(valueToggleStyles, /\.vt-studio-word-counter__value\s*\{[^}]*display:\s*flex/);
+  assert.match(valueToggleStyles, /\.vt-studio-word-counter__value\s*\{/);
 });
 
 test("value-toggle recovery defaults do not repaint arrow-toggle faces with half-primary fill", () => {

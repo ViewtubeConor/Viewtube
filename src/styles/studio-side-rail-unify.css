@@ -10,10 +10,10 @@
 .vt-studio-value-toggle__arrow-stack {
   position: relative;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-  width: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px)));
-  min-width: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px)));
-  max-width: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px)));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  width: var(--vt-studio-control-height, 44px);
+  min-width: var(--vt-studio-control-height, 44px);
+  max-width: var(--vt-studio-control-height, 44px);
   height: 100%;
   min-height: 0;
   align-self: stretch;
@@ -47,9 +47,10 @@
   display: grid;
   place-items: center;
   width: 100%;
-  height: 100%;
+  height: auto;
   min-width: 0;
   min-height: 0;
+  align-self: stretch;
   margin: 0;
   padding: 0;
   border: 0;
@@ -65,8 +66,8 @@
 .vt-studio-side-counter__actions svg,
 .vt-studio-value-toggle__arrow-stack svg {
   display: block;
-  width: min(calc(var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px))) * 0.62), 100%);
-  height: min(calc(var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px))) * 0.62), 100%);
+  width: min(calc(var(--vt-studio-control-height, 44px) * 0.62), 100%);
+  height: min(calc(var(--vt-studio-control-height, 44px) * 0.62), 100%);
   stroke: #000;
   stroke-width: var(--vt-studio-control-icon-stroke, 2.5);
   stroke-linecap: round;

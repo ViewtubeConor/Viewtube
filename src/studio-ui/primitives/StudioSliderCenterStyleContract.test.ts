@@ -43,6 +43,16 @@ describe("Studio recovery control styling", () => {
     expect(catalogCss).toContain("border-radius:var(--radius)");
   });
 
+  it("styles the counter-controlled slider rails and center track with the split primary-fill contract", () => {
+    expect(controlSystemCss).toContain(".vt-studio-double-split-slider.is-counter-controls .vt-studio-double-split-slider__counter > button");
+    expect(controlSystemCss).toContain("background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6));");
+    expect(controlSystemCss).toContain("border: var(--vt-studio-slider-stroke) solid #000;");
+    expect(controlSystemCss).toContain("padding-inline: calc(var(--vt-studio-control-height, 44px) * .12);");
+    expect(controlSystemCss).toContain("--vt-studio-slider-left-fill: var(--vt-studio-control-primary, var(--pair-a, #36e0f6));");
+    expect(controlSystemCss).toContain("var(--vt-studio-slider-left-fill) 0 var(--vt-studio-slider-progress, 0%)");
+    expect(controlSystemCss).toContain("color-mix(in srgb, var(--vt-studio-slider-left-fill) 50%, transparent) var(--vt-studio-slider-progress, 0%) 100%");
+  });
+
   it("keeps the bar-toggle recovery coloring while preserving token-owned geometry", () => {
     expect(toggleOverrides).toContain('.vt-studio-value-toggle__bar[data-active="false"]');
     expect(toggleOverrides).toContain("color-mix(in srgb, #fff 50%, var(--vt-studio-control-accent");

@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/studio-control-entry.css";
 
 import "../../styles/studio-split-accordion.css";
 

@@ -19,3 +19,6 @@
 
 /* New counter-family variants must follow the shared production control cascade. */
 @import "./studio-control-word-counter.css";
+
+/* Last field layer: persistent primary inset must survive every family/correction sheet. */
+@import "./studio-text-input.css";

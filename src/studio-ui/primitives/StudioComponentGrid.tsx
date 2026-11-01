@@ -1,4 +1,5 @@
 import * as React from "react";
+import "../../styles/studio-control-entry.css";
 
 export type StudioGridSize = "supreme" | "standard" | "compact" | "mini" | "micro";
 export type StudioGridCorners = "radius" | "square";

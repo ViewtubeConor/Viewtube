@@ -1,6 +1,5 @@
 /* One split-shell contract for split-left/right/double faces and rails. */
 [data-vt-studio-control="true"][data-vt-studio-split] {
-  --vt-studio-split-rail-size: calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px));
   position: relative;
   display: grid;
   align-items: stretch;
@@ -11,13 +10,13 @@
   border: var(--vt-studio-control-stroke, 3px) solid #000;
 }
 [data-vt-studio-control="true"][data-vt-studio-split="left"] {
-  grid-template-columns: var(--vt-studio-split-rail-size) minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
 }
 [data-vt-studio-control="true"][data-vt-studio-split="right"] {
-  grid-template-columns: minmax(0, 1fr) var(--vt-studio-split-rail-size);
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 [data-vt-studio-control="true"][data-vt-studio-split="double"] {
-  grid-template-columns: var(--vt-studio-split-rail-size) minmax(0, 1fr) var(--vt-studio-split-rail-size);
+  grid-template-columns: auto minmax(0, 1fr) auto;
 }
 [data-vt-studio-control="true"] [data-vt-studio-split-rail] {
   position: relative;
@@ -27,8 +26,8 @@
   align-items: center;
   justify-content: center;
   align-self: stretch;
-  min-width: var(--vt-studio-split-rail-size);
-  width: var(--vt-studio-split-rail-size);
+  min-width: var(--vt-studio-control-height, 44px);
+  width: var(--vt-studio-control-height, 44px);
   height: 100%;
   min-height: 0;
   margin: 0;
@@ -65,8 +64,7 @@
   color: #000;
   background: var(--vt-studio-control-secondary, var(--pair-b));
 }
-[data-vt-studio-control="true"] [data-vt-studio-split-label],
-[data-vt-studio-control="true"] [data-vt-studio-split-field] {
+[data-vt-studio-control="true"] [data-vt-studio-split-label] {
   box-sizing: border-box;
   min-width: 0;
   min-height: 0;
@@ -90,6 +88,25 @@
   color: #000;
   text-align: center;
   line-height: var(--vt-studio-control-line-height, .86);
+}
+
+/* The only fieldSlot consumer is the controlled double-split slider. */
+.vt-studio-double-split-slider > [data-vt-studio-split-field] {
+  box-sizing: border-box;
+  display: grid;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-items: stretch;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-inline: max(var(--vt-studio-control-stroke, 3px), calc(var(--vt-studio-control-height, 44px) * .12));
+  padding-block: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6));
 }
 
 /* A face-only split shell is nested inside StudioButton but follows the same grid. */
@@ -116,8 +133,8 @@
   position: relative;
   z-index: 1;
   box-sizing: border-box;
-  width: var(--vt-studio-split-rail-size);
-  min-width: var(--vt-studio-split-rail-size);
+  width: var(--vt-studio-control-height, 44px);
+  min-width: var(--vt-studio-control-height, 44px);
   height: 100%;
   border-radius: 0;
 }
@@ -132,7 +149,7 @@ button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studi
 }
 button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studio-split="left"]) > [data-vt-studio-button-face] {
   display: grid;
-  grid-template-columns: var(--vt-studio-split-rail-size) minmax(0, 1fr);
+  grid-template-columns: var(--vt-studio-control-height, 44px) minmax(0, 1fr);
   align-items: stretch;
   padding: 0;
   border: var(--vt-studio-control-stroke, 3px) solid #000;
@@ -151,8 +168,8 @@ button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studi
   display: grid;
   place-items: center;
   align-self: stretch;
-  width: var(--vt-studio-split-rail-size);
-  min-width: var(--vt-studio-split-rail-size);
+  width: var(--vt-studio-control-height, 44px);
+  min-width: var(--vt-studio-control-height, 44px);
   height: 100%;
   margin: 0;
   padding: 0;
@@ -185,41 +202,6 @@ button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studi
   color: #000;
 }
 
-/* Username composite: shell owns perimeter; inner input and rail do not duplicate it. */
-.vt-studio-username-input,
-.vt-studio-split-shell.vt-studio-username-input {
-  box-sizing: border-box;
-  border: var(--vt-studio-control-stroke, 3px) solid #000;
-  border-radius: var(--vt-studio-control-radius, 6px);
-  overflow: hidden;
-  background: color-mix(in srgb, var(--vt-studio-control-accent, var(--pair-a, #36e0f6)) var(--vt-studio-control-default-fill-opacity, 50%), transparent);
-}
-.vt-studio-username-input input.vt-studio-username-input__input[data-vt-studio-control="true"],
-.vt-studio-username-input [data-vt-studio-split-field] > [data-vt-studio-control="true"],
-.vt-studio-username-input [data-vt-studio-split-label] > [data-vt-studio-control="true"] {
-  box-sizing: border-box;
-  border: 0;
-  border-radius: 0;
-  outline: none;
-  box-shadow: none;
-  background: transparent;
-  min-height: 100%;
-  height: 100%;
-}
-.vt-studio-username-input > [data-vt-studio-split-rail],
-.vt-studio-username-input [data-vt-studio-split-rail] {
-  border: 0;
-  border-right: var(--vt-studio-control-stroke, 3px) solid #000;
-  border-radius: 0;
-  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
-  color: #000;
-}
-.vt-studio-username-input [data-vt-studio-split-rail] svg,
-.vt-studio-username-input [data-vt-studio-split-rail] svg * {
-  color: #000;
-  stroke: #000;
-}
-
 /* All double-split rails retain the secondary role, including both sides. */
 .vt-studio-split-shell[data-vt-studio-split="double"] > [data-vt-studio-split-rail],
 .vt-studio-double-split-badge__rail {
@@ -229,7 +211,36 @@ button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studi
 .vt-studio-split-right-badge__rail,
 .vt-studio-double-split-badge__rail,
 [data-vt-studio-split-rail] {
+  display: flex;
+  flex: 0 0 var(--vt-studio-control-height, 44px);
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: var(--vt-studio-control-height, 44px);
+  min-width: var(--vt-studio-control-height, 44px);
+  max-width: var(--vt-studio-control-height, 44px);
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
   border-radius: 0;
+  overflow: hidden;
+}
+.vt-studio-split-left-badge__rail > svg,
+.vt-studio-split-right-badge__rail > svg,
+.vt-studio-double-split-badge__rail > svg {
+  display: block;
+  flex: 0 0 auto;
+  width: min(var(--vt-studio-control-icon-size, 38px), 100%);
+  height: min(var(--vt-studio-control-icon-size, 38px), 100%);
+  margin: auto;
+  color: #000;
+  stroke: #000;
+}
+.vt-studio-split-left-badge__rail > svg *,
+.vt-studio-split-right-badge__rail > svg *,
+.vt-studio-double-split-badge__rail > svg * {
+  stroke: #000;
 }
 .vt-studio-split-left-badge__rail > svg,
 .vt-studio-split-right-badge__rail > svg,
@@ -304,7 +315,7 @@ button[data-vt-studio-play-pause="true"] [data-vt-studio-split-rail] {
   letter-spacing: var(--vt-studio-control-letter-spacing, -.02em) !important;
   text-transform: var(--vt-studio-control-text-transform, uppercase) !important;
   padding: 0 14px !important;
-  background: color-mix(in srgb, var(--vt-stepper-primary) var(--vt-studio-control-default-fill-opacity, 50%), transparent) !important;
+  background: color-mix(in srgb, white 50%, var(--vt-stepper-primary) 50%) !important;
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
   -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) #000 !important;
@@ -345,102 +356,26 @@ button[data-vt-studio-play-pause="true"] [data-vt-studio-split-rail] {
 }
 
 
-/* Final rail invariant: each rail is a square inside the shell's inner box.
-   The black outer perimeter/divider stays separate; pair fill never becomes chrome. */
-[data-vt-studio-control="true"][data-vt-studio-split] > [data-vt-studio-split-rail],
-[data-vt-studio-control="true"] [data-vt-studio-split-face] > [data-vt-studio-split-rail],
-button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studio-split="left"]) [data-vt-studio-split-rail] {
-  --vt-studio-split-rail-size: calc(var(--vt-studio-control-height, 44px) - var(--vt-studio-control-stroke, 3px) - var(--vt-studio-control-stroke, 3px));
-  box-sizing: border-box;
-  width: var(--vt-studio-split-rail-size);
-  min-width: var(--vt-studio-split-rail-size);
-  max-width: var(--vt-studio-split-rail-size);
-  height: 100%;
-  min-height: 0;
-  aspect-ratio: 1 / 1;
-  flex: 0 0 var(--vt-studio-split-rail-size);
-}
-button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studio-split="left"]) > [data-vt-studio-button-face] {
-  grid-template-columns: calc(var(--vt-studio-control-height, 44px) - var(--vt-studio-control-stroke, 3px) - var(--vt-studio-control-stroke, 3px)) minmax(0, 1fr);
-}
-
-
-/* Split-module rails are square within the header's content box, not the outer stroke. */
+/* Top split-module rails follow the shared full-size rail geometry. */
 .vt-studio-top-split-module__head[data-split="left"] {
-  grid-template-columns: calc(var(--vt-top-split-size, 44px) - var(--vt-top-split-stroke, 3px)) minmax(0, 1fr);
+  grid-template-columns: var(--vt-top-split-size, 44px) minmax(0, 1fr);
 }
 .vt-studio-top-split-module__head[data-split="right"] {
-  grid-template-columns: minmax(0, 1fr) calc(var(--vt-top-split-size, 44px) - var(--vt-top-split-stroke, 3px));
+  grid-template-columns: minmax(0, 1fr) var(--vt-top-split-size, 44px);
 }
 .vt-studio-top-split-module__head[data-split="double"] {
-  grid-template-columns: calc(var(--vt-top-split-size, 44px) - var(--vt-top-split-stroke, 3px)) minmax(0, 1fr) calc(var(--vt-top-split-size, 44px) - var(--vt-top-split-stroke, 3px));
+  grid-template-columns: var(--vt-top-split-size, 44px) minmax(0, 1fr) var(--vt-top-split-size, 44px);
 }
 .vt-studio-top-split-module__rail {
   box-sizing: border-box;
-  width: calc(var(--vt-top-split-size, 44px) - var(--vt-top-split-stroke, 3px));
-  min-width: calc(var(--vt-top-split-size, 44px) - var(--vt-top-split-stroke, 3px));
+  width: var(--vt-top-split-size, 44px);
+  min-width: var(--vt-top-split-size, 44px);
+  max-width: var(--vt-top-split-size, 44px);
   height: 100%;
   min-height: 0;
   aspect-ratio: 1 / 1;
 }
 
-
-/* Split text inputs transfer focus paint to the composite shell, not a nested second outline. */
-.vt-studio-username-input:focus-within {
-  background: color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, transparent);
-  outline: calc(var(--vt-studio-control-stroke, 3px) * var(--vt-studio-focus-outline-width-ratio, .65)) solid var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
-  outline-offset: 0;
-  box-shadow: none;
-}
-.vt-studio-username-input:focus-within [data-vt-studio-split-field] > input[data-vt-studio-control="true"] {
-  color: #000;
-  -webkit-text-fill-color: #000;
-  -webkit-text-stroke-color: var(--vt-field-primary, var(--pair-a, #36e0f6));
-  caret-color: var(--vt-field-primary, var(--pair-a, #36e0f6));
-}
-
-
-/* Regression recovery: rail geometry is a fixed square, never stretched to a tall grid row. */
-[data-vt-studio-control="true"][data-vt-studio-split] > [data-vt-studio-split-rail],
-[data-vt-studio-control="true"] [data-vt-studio-split-face] > [data-vt-studio-split-rail],
-button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studio-split="left"]) [data-vt-studio-split-rail],
-.vt-studio-split-left-badge__rail,
-.vt-studio-split-right-badge__rail,
-.vt-studio-double-split-badge__rail,
-.vt-studio-top-split-module__rail,
-.vt-studio-side-counter__rail,
-.vt-studio-counter__rail,
-.vt-studio-arrow-toggle__rail,
-.vt-studio-side-toggle__rail,
-.vt-studio-double-side-toggle__rail,
-.vt-studio-bar-toggle__rail {
-  box-sizing: border-box;
-  align-self: center;
-  height: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, var(--vt-top-split-size, 44px)) - 2 * var(--vt-studio-control-stroke, var(--vt-top-split-stroke, 3px))));
-  min-height: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, var(--vt-top-split-size, 44px)) - 2 * var(--vt-studio-control-stroke, var(--vt-top-split-stroke, 3px))));
-  max-height: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, var(--vt-top-split-size, 44px)) - 2 * var(--vt-studio-control-stroke, var(--vt-top-split-stroke, 3px))));
-  aspect-ratio: 1 / 1;
-  flex: 0 0 var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height, var(--vt-top-split-size, 44px)) - 2 * var(--vt-studio-control-stroke, var(--vt-top-split-stroke, 3px))));
-}
-[data-vt-studio-control="true"][data-vt-studio-split] > [data-vt-studio-split-rail],
-[data-vt-studio-control="true"] [data-vt-studio-split-face] > [data-vt-studio-split-rail],
-button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studio-split="left"]) [data-vt-studio-split-rail] {
-  --vt-studio-split-rail-size: calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px));
-}
-.vt-studio-top-split-module__head[data-split="left"] {
-  grid-template-columns: calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px)) minmax(0, 1fr);
-}
-.vt-studio-top-split-module__head[data-split="right"] {
-  grid-template-columns: minmax(0, 1fr) calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px));
-}
-.vt-studio-top-split-module__head[data-split="double"] {
-  grid-template-columns: calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px)) minmax(0, 1fr) calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px));
-}
-.vt-studio-top-split-module__rail {
-  width: calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px));
-  min-width: calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px));
-  max-width: calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px));
-}
 /* Intermodules must consume the full available row; do not cap their width to a sidebar column. */
 .vt-studio-inter-module,
 .vt-studio-intermodule,
@@ -453,39 +388,21 @@ button[data-vt-studio-button="true"]:is([data-split-left="true"], [data-vt-studi
   grid-column: 1 / -1;
 }
 
-/* Named badge/counter rails use the same square inner-box dimension as split shells. */
-.vt-studio-split-left-badge__rail,
-.vt-studio-split-right-badge__rail,
-.vt-studio-double-split-badge__rail,
-.vt-studio-side-counter__rail,
-.vt-studio-counter__rail,
-.vt-studio-arrow-toggle__rail,
-.vt-studio-side-toggle__rail,
-.vt-studio-double-side-toggle__rail,
-.vt-studio-bar-toggle__rail {
-  --vt-studio-split-rail-size: calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px));
-  width: var(--vt-studio-split-rail-size);
-  min-width: var(--vt-studio-split-rail-size);
-  max-width: var(--vt-studio-split-rail-size);
+/* Double-split sliders inherit the global full-row width; their rails remain square. */
+.vt-studio-double-split-slider {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
 }
 
-/* Counter family width is a geometry exception: 2h value pane plus square rails. */
-.vt-studio-counter {
-  --vt-studio-counter-root-width: calc((var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px)) * (var(--vt-studio-counter-value-area-aspect-ratio, 2) + var(--vt-studio-counter-double-rail-count, 2)) + 2 * var(--vt-studio-control-stroke, 3px));
-  flex: 0 0 auto;
-  width: var(--vt-studio-counter-root-width);
-}
-.vt-studio-side-counter,
-.vt-studio-left-counter {
-  --vt-studio-counter-root-width: calc((var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px)) * (var(--vt-studio-counter-value-area-aspect-ratio, 2) + var(--vt-studio-counter-side-rail-count, 1)) + 2 * var(--vt-studio-control-stroke, 3px));
-  flex: 0 0 auto;
-  width: var(--vt-studio-counter-root-width);
-}
-.vt-studio-counter > [data-vt-studio-split-label],
-.vt-studio-side-counter > [data-vt-studio-split-label],
-.vt-studio-left-counter > [data-vt-studio-split-label] {
-  flex: 0 0 calc((var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px)) * var(--vt-studio-counter-value-area-aspect-ratio, 2));
-  width: calc(var(--vt-studio-control-height, 44px) * var(--vt-studio-counter-value-area-aspect-ratio, 2));
-  min-width: calc(var(--vt-studio-control-height, 44px) * var(--vt-studio-counter-value-area-aspect-ratio, 2));
-  max-width: calc(var(--vt-studio-control-height, 44px) * var(--vt-studio-counter-value-area-aspect-ratio, 2));
+
+/* Double-split slider: preserve global pair roles and keep the range track clear
+   of both vertical rail dividers. */
+.vt-studio-double-split-slider > [data-vt-studio-split-field] {
+  padding-inline: max(
+    calc(var(--vt-studio-control-stroke, 3px) * 2),
+    calc(var(--vt-studio-control-height, 44px) * .12)
+  );
 }

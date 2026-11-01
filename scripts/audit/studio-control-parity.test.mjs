@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const css = readFileSync("src/styles/studio-control-system.css", "utf8");
+const toggleCss = readFileSync("src/styles/studio-control-value-toggles.css", "utf8");
+const sideRailCss = readFileSync("src/styles/studio-side-rail-unify.css", "utf8");
 const toggles = readFileSync("src/studio-ui/primitives/StudioValueToggles.tsx", "utf8");
 const area = readFileSync("src/studio-ui/primitives/StudioTextArea.tsx", "utf8");
 const fields = readFileSync("src/styles/studio-control-fields.css", "utf8");
@@ -34,15 +36,15 @@ test("canonical size tokens preserve the five-tier geometry contract", () => {
 });
 
 test("side-toggle stack uses a centered overlay divider, not a half-cell border", () => {
-  assert.match(css, /\.vt-studio-value-toggle__arrow-stack::after[\s\S]*?top:\s*50%[\s\S]*?translateY\(-50%\)/);
-  assert.match(css, /\.vt-studio-value-toggle__arrow-stack\s*>\s*\.vt-studio-value-toggle__arrow[\s\S]*?border-bottom:\s*0\s*!important/);
+  assert.match(sideRailCss, /\.vt-studio-value-toggle__arrow-stack::after[\s\S]*?top:\s*50%[\s\S]*?translateY\(-50%\)/);
+  assert.match(toggleCss, /\.vt-studio-split-shell\.vt-studio-value-toggle > \[data-vt-studio-split-rail\] \.vt-studio-value-toggle__arrow[\s\S]*?border:\s*0/);
   assert.match(toggles, /export function StudioSideToggle/);
 });
 
-test("toggle chevrons use the standard, compact, and micro icon dimensions", () => {
-  assert.match(css, /\.vt-studio-value-toggle--side[\s\S]*?width:\s*14px/);
-  assert.match(css, /\.vt-studio-value-toggle--side\[data-size="compact"\][\s\S]*?width:\s*30px/);
-  assert.match(css, /\.vt-studio-value-toggle--side\[data-size="micro"\][\s\S]*?width:\s*15px/);
+test("toggle chevrons use control-height proportional icon sizing", () => {
+  assert.match(toggleCss, /--vt-studio-stepper-icon-size:\s*calc\(var\(--vt-studio-control-height, 44px\) \* \.82\)/);
+  assert.match(sideRailCss, /width:\s*min\(calc\(var\(--vt-studio-control-height, 44px\) \* 0\.62\), 100%\)/);
+  assert.match(sideRailCss, /stroke-width:\s*var\(--vt-studio-control-icon-stroke, 2\.5\)/);
 });
 
 test("textarea focus uses primary 15-percent fill and secondary proportional outline", () => {
@@ -56,8 +58,9 @@ test("single-line panels clip overflow without ellipses and exclude textareas", 
   assert.doesNotMatch(css, /textarea\s*\{[^}]*text-overflow:\s*clip/s);
 });
 
-test("click growth animation targets the SVG glyph only", () => {
-  assert.match(css, /\.vt-studio-value-toggle__arrow:active svg\s*\{[^}]*animation:\s*vt-studio-value-toggle-grow/);
+test("value-toggle family keeps focus transitions without adding click-growth motion", () => {
+  assert.match(toggleCss, /\.vt-studio-value-toggle:focus-within/);
+  assert.doesNotMatch(toggleCss, /\.vt-studio-value-toggle__arrow:active svg/);
 });
 
 
@@ -87,7 +90,7 @@ test("floating-label risen typography uses one shared token pair while rest labe
 });
 
 test("double-side divider is centered and the confirmed catalog mixes compact and standard variants", () => {
-  assert.match(css, /\.vt-studio-value-toggle--double \.vt-studio-value-toggle__divider\s*\{[^}]*left:\s*50%;[^}]*translateX\(-50%\)/s);
+  assert.match(toggleCss, /\.vt-studio-value-toggle--double \.vt-studio-value-toggle__divider\s*\{[^}]*left:\s*50%;[^}]*translateX\(-50%\)/s);
   assert.match(catalog, /sizeVariant=\{tier\}/);
 });
 
@@ -146,7 +149,7 @@ test("top direct-representative module covers the full explicitly exported contr
     "StudioIconButton", "StudioSquareIconButton", "StudioSquareIconButtonGroup", "StudioCircleIconButton",
     "StudioSplitLeftButton", "StudioSplitRightButton", "StudioDoubleSplitButton",
     "StudioPlayPauseButton", "StudioSwitch", "StudioChoice", "StudioRadio", "StudioCheckbox", "StudioXCheckbox",
-    "StudioNumberInput", "StudioTextInput", "StudioTextArea", "StudioTextBox", "StudioUsernameInput", "StudioSplitLeftInput",
+    "StudioNumberInput", "StudioTextInput", "StudioTextArea", "StudioTextBox", "StudioSplitTextInput",
     "StudioDropdown", "StudioLegendMultiDropdown", "StudioSplitLeftDropdown",
     "StudioArrowToggle", "StudioBarToggle", "StudioWordToggle", "StudioVerticalWordToggle",
     "StudioSideToggle", "StudioDoubleSideToggle", "StudioCounter", "StudioSideCounter", "StudioLeftCounter",

@@ -1,0 +1,159 @@
+/* One chevron button owner shared by counters, arrow toggles, and bar controls. */
+/* Shared value-toggle family. Geometry comes from StudioSplitShell and inherited size tokens. */
+.vt-studio-value-toggle {
+  --vt-toggle-text: #000;
+  --vt-toggle-fill: var(--vt-studio-control-accent, var(--pair-a));
+  --vt-toggle-icon: #000;
+  --vt-toggle-icon-fill: transparent;
+  width: 100%; min-width: 0; box-sizing: border-box;
+  color: var(--vt-toggle-text); background: var(--vt-toggle-fill);
+  font-family: var(--vt-studio-control-font-family, Inter, sans-serif);
+  font-weight: 1000; line-height: 1; text-transform: uppercase; letter-spacing: -.02em;
+}
+.vt-studio-split-shell.vt-studio-value-toggle {
+  display: grid; width: 100%; min-width: 0; height: var(--vt-studio-control-height, 44px);
+  min-height: var(--vt-studio-control-height, 44px);
+  border: var(--vt-studio-control-stroke, 3px) solid #000;
+  border-radius: var(--vt-studio-control-radius, 6px);
+  background: var(--vt-toggle-fill); color: var(--vt-toggle-text);
+}
+.vt-studio-split-shell.vt-studio-value-toggle[data-vt-studio-split="left"] { grid-template-columns: var(--vt-studio-control-height, 44px) minmax(0, 1fr); }
+.vt-studio-split-shell.vt-studio-value-toggle[data-vt-studio-split="right"] { grid-template-columns: minmax(0, 1fr) var(--vt-studio-control-height, 44px); }
+.vt-studio-split-shell.vt-studio-value-toggle[data-vt-studio-split="double"] { grid-template-columns: var(--vt-studio-control-height, 44px) minmax(0, 1fr) var(--vt-studio-control-height, 44px); }
+.vt-studio-split-shell.vt-studio-value-toggle--arrow > [data-vt-studio-split-rail] {
+  width: var(--vt-studio-control-height, 44px); min-width: 0;
+  background: var(--vt-studio-control-secondary, var(--pair-b)); border-color: #000;
+}
+.vt-studio-split-shell.vt-studio-value-toggle > [data-vt-studio-split-rail] .vt-studio-value-toggle__arrow {
+  display: grid; place-items: center; width: 100%; min-width: 0; height: 100%; padding: 0;
+  border: 0; border-radius: 0; color: var(--vt-toggle-icon); background: var(--vt-toggle-icon-fill); cursor: pointer;
+}
+.vt-studio-value-toggle__arrow { --vt-studio-stepper-icon-size: calc(var(--vt-studio-control-height, 44px) * .82); --vt-studio-stepper-icon-stroke: 3.75; }
+.vt-studio-value-toggle__arrow svg { display: block; width: var(--vt-studio-stepper-icon-size); height: var(--vt-studio-stepper-icon-size); max-width: 100%; max-height: 100%; }
+.vt-studio-value-toggle__arrow:disabled { opacity: .35; cursor: not-allowed; }
+.vt-studio-split-shell.vt-studio-value-toggle > [data-vt-studio-split-label] {
+  min-width: 0; width: 100%; overflow: hidden; padding: 0 calc(var(--vt-studio-control-stroke, 3px) * 1.33);
+  background: var(--vt-toggle-fill); color: var(--vt-toggle-text);
+  -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) currentColor;
+}
+.vt-studio-split-shell.vt-studio-value-toggle .vt-studio-value-toggle__face {
+  display: flex; width: 100%; min-width: 0; height: 100%; align-items: center; justify-content: center;
+  padding-block: 0; overflow: hidden; white-space: nowrap; text-overflow: clip; line-height: 1;
+  color: var(--vt-studio-number-rest-color, color-mix(in srgb, #fff 50%, var(--vt-toggle-fill, var(--pair-a))));
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) currentColor;
+}
+.vt-studio-value-toggle--side .vt-studio-value-toggle__face { display: grid; place-items: center; align-content: center; justify-content: flex-start; line-height: 1; }
+.vt-studio-value-toggle--double { display: flex; align-items: stretch; box-sizing: border-box; width: 100%; min-width: 0; height: var(--vt-studio-control-height, 44px); border: var(--vt-studio-control-stroke, 3px) solid #000; border-radius: var(--vt-studio-control-radius, 6px); overflow: hidden; }
+.vt-studio-value-toggle__double-side { display: flex; flex: 1 1 0; min-width: 0; }
+.vt-studio-value-toggle--double > .vt-studio-value-toggle__double-side > .vt-studio-split-shell {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.vt-studio-value-toggle--double > .vt-studio-value-toggle__double-side > .vt-studio-split-shell > [data-vt-studio-split-rail] {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.vt-studio-value-toggle__divider { flex: 0 0 var(--vt-studio-control-stroke, 3px); background: #000; }
+.vt-studio-value-toggle--double[data-right-appearance="primary"] .vt-studio-value-toggle__double-side:last-child { --vt-toggle-fill: var(--pair-a); --vt-toggle-text: #000; }
+.vt-studio-value-toggle--double[data-right-appearance="secondary"] .vt-studio-value-toggle__double-side:last-child { --vt-toggle-fill: var(--pair-b); --vt-toggle-text: #000; }
+.vt-studio-value-toggle--double[data-right-appearance="black-primary-text"] .vt-studio-value-toggle__double-side:last-child { --vt-toggle-fill: #000; --vt-toggle-text: var(--pair-a); }
+.vt-studio-value-toggle--double[data-variant="v2"] .vt-studio-value-toggle__divider { display: none; }
+.vt-studio-value-toggle__bars { display: flex; flex: 1 1 auto; align-items: center; justify-content: center; gap: var(--vt-studio-control-stroke, 3px); min-width: 0; padding: 0 calc(var(--vt-studio-control-stroke, 3px) * 1.33); overflow: visible; }
+.vt-studio-value-toggle__bar { position: relative; flex: 1 1 0; min-width: 2px; height: 65%; border: 1px solid #000; background: transparent; }
+.vt-studio-value-toggle__bar[data-active="true"] { background: var(--pair-b); }
+.vt-studio-value-toggle__bar-tooltip { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; padding: 2px 4px; border: 1px solid #000; background: var(--pair-b); color: #000; font-size: 10px; font-weight: 1000; white-space: nowrap; opacity: 0; pointer-events: none; }
+.vt-studio-value-toggle__bar:hover .vt-studio-value-toggle__bar-tooltip,
+.vt-studio-value-toggle__bar:focus-within .vt-studio-value-toggle__bar-tooltip { opacity: 1; }
+.vt-studio-word-counter__value {
+  display: grid; place-items: center; align-self: stretch; min-width: 0; width: 100%; height: 100%; padding: 0;
+  line-height: 1; text-align: center;
+  color: var(--vt-studio-number-rest-color, color-mix(in srgb, #fff 50%, var(--vt-toggle-fill, var(--pair-a))));
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) currentColor;
+}
+.vt-studio-word-counter__button { display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; color: #000; }
+.vt-studio-word-counter__button { --vt-studio-stepper-icon-size: calc(var(--vt-studio-control-height, 44px) * .82); --vt-studio-stepper-icon-stroke: 3.75; }
+.vt-studio-word-counter__button svg { width: var(--vt-studio-stepper-icon-size); height: var(--vt-studio-stepper-icon-size); }
+@media (prefers-reduced-motion: reduce) {
+  .vt-studio-value-toggle__arrow svg { animation: none; transition: none; }
+}
+
+/* Shared focus contract: the perimeter and glyph transition use one timing token.
+   Double-side controls keep one outer outline; only the side containing focus changes glyph color. */
+.vt-studio-value-toggle .vt-studio-value-toggle__face,
+.vt-studio-value-toggle .vt-studio-value-toggle__arrow,
+.vt-studio-value-toggle .vt-studio-value-toggle__divider {
+  transition:
+    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-fill-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    background-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
+}
+.vt-studio-value-toggle {
+  outline: 0 solid transparent;
+  outline-offset: 0;
+  transition:
+    outline-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    outline-width var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
+}
+.vt-studio-value-toggle:not(.vt-studio-value-toggle--double):not(.vt-studio-value-toggle--nested):focus-within {
+  outline: var(--vt-studio-focus-outline-width, calc(var(--vt-studio-control-stroke, 3px) * .65))
+    solid var(--vt-studio-focus-outline-color, var(--pair-b));
+  outline-offset: 0;
+}
+.vt-studio-value-toggle:not(.vt-studio-value-toggle--double):not(.vt-studio-value-toggle--nested):focus-within .vt-studio-value-toggle__face,
+.vt-studio-value-toggle:not(.vt-studio-value-toggle--double):not(.vt-studio-value-toggle--nested):focus-within .vt-studio-word-counter__value {
+  color: var(--vt-studio-number-active-color, #000);
+  -webkit-text-fill-color: var(--vt-studio-number-active-color, #000);
+  -webkit-text-stroke-color: var(--vt-studio-number-active-stroke, #000);
+}
+.vt-studio-value-toggle:not(.vt-studio-value-toggle--double):not(.vt-studio-value-toggle--nested):focus-within {
+  background: color-mix(in srgb, white 85%, var(--vt-toggle-fill, var(--pair-a)) 15%);
+}
+.vt-studio-value-toggle--double:focus-within {
+  outline: var(--vt-studio-focus-outline-width, calc(var(--vt-studio-control-stroke, 3px) * .65))
+    solid var(--vt-studio-focus-outline-color, var(--pair-b));
+  outline-offset: 0;
+}
+.vt-studio-value-toggle--double:focus-within .vt-studio-value-toggle__divider { outline: none; }
+.vt-studio-value-toggle--double .vt-studio-split-shell:focus-within {
+  outline: none;
+}
+.vt-studio-value-toggle--double .vt-studio-value-toggle__double-side:focus-within .vt-studio-value-toggle__face,
+.vt-studio-value-toggle--double .vt-studio-value-toggle__double-side:focus-within .vt-studio-word-counter__value {
+  color: var(--vt-studio-number-active-color, #000);
+  -webkit-text-fill-color: var(--vt-studio-number-active-color, #000);
+  -webkit-text-stroke-color: var(--vt-studio-number-active-stroke, #000);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vt-studio-value-toggle,
+  .vt-studio-value-toggle .vt-studio-value-toggle__face,
+  .vt-studio-value-toggle .vt-studio-value-toggle__arrow,
+  .vt-studio-value-toggle .vt-studio-value-toggle__divider { transition: none; }
+}
+
+
+/* Nested halves never draw their own focus perimeter or repaint their full face.
+   The parent owns the single outline; only the focused half's characters change. */
+.vt-studio-value-toggle--double .vt-studio-value-toggle--nested:focus-within {
+  outline: none;
+  background: transparent;
+}
+.vt-studio-value-toggle--double .vt-studio-value-toggle__double-side .vt-studio-value-toggle__face,
+.vt-studio-value-toggle--double .vt-studio-value-toggle__double-side .vt-studio-word-counter__value {
+  transition:
+    color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-fill-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out,
+    -webkit-text-stroke-color var(--vt-studio-focus-outline-fade-ms, 500ms) ease-out;
+}
+/* Double-side toggle uses the same unmodified side-counter rails and action cells. */

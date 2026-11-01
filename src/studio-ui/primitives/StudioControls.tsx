@@ -1,4 +1,5 @@
 import React from "react"
+import "../../styles/studio-control-entry.css"
 import { getAlphabeticalSpectrumColor } from "../../styles/toolboxPalette"
 import { Bell, Check, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Download, Heart as HeartIcon, Minus, Plus, RefreshCw, Settings2, ThumbsUp, Upload } from "lucide-react"
 import { STUDIO_CONTROL_SIZE_CONTRACT, STUDIO_DROPDOWN_TOKENS, STUDIO_FOCUS_INTERACTION_TOKENS, type StudioControlSize, type StudioControlInteractiveSize, type StudioIconSizeVariant } from "../tokens"
@@ -128,7 +129,7 @@ export const STUDIO_COMPONENT_GLOBAL_DEFAULTS = {
   fontWeight: 1000,
   strokeColor: "#000000",
   colorPairSystem: "primary = --pair-a; secondary = --pair-b",
-  backgroundFill: "buttons and badges use the global primary/secondary color pair; text inputs and text areas use primary at 50% opacity by default and 15% primary on focus",
+  backgroundFill: "buttons and badges use the global primary/secondary color pair; text inputs and text areas use a 50% white + 50% primary fill by default and an 85% white + 15% primary fill on focus",
   textColor: "editable text fields use primary text and primary glyph stroke at rest, black text and black glyph stroke on focus, with a persistent primary inset; display text boxes always use black text/stroke, primary inset, and secondary outline",
   textTransform: "uppercase",
   letterSpacing: "-0.02em",
@@ -1495,61 +1496,6 @@ export const StudioSplitShell: React.FC<StudioSplitShellProps> = ({
   )
 }
 
-export interface StudioUsernameInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "className" | "style"> {
-  icon: React.ReactNode
-  sizeVariant?: StudioControlSize
-  /** className/style apply to the composite; inputClassName/inputStyle target the native input. */
-  className?: string
-  style?: React.CSSProperties
-  inputClassName?: string
-  inputStyle?: React.CSSProperties
-}
-type StudioSplitFieldInputProps = StudioUsernameInputProps & {
-  libraryComponent: "StudioUsernameInput" | "StudioSplitLeftInput"
-}
-const StudioSplitFieldInput = React.forwardRef<HTMLInputElement, StudioSplitFieldInputProps>(
-  ({ icon, sizeVariant = "standard", className, style, inputClassName, inputStyle, disabled, libraryComponent, ...inputProps }, ref) => (
-    <StudioSplitShell
-      layout="left"
-      sizeVariant={sizeVariant}
-      iconLeft={<span data-vt-studio-username-rail="true">{icon}</span>}
-      className={studioClasses("vt-studio-username-input", className)}
-      shellProps={{
-        "data-vt-studio-username-input": "true",
-        "data-vt-studio-control-family": "field",
-        "data-vt-studio-control-kind": "split-input",
-        "data-vt-library-component": libraryComponent,
-        "data-icon-size-variant": "large",
-        "data-disabled": disabled ? "true" : undefined,
-        style,
-        "aria-disabled": disabled || undefined,
-      }}
-      fieldSlot
-    >
-      <StudioTextInput
-        {...inputProps}
-        ref={ref}
-        sizeVariant={sizeVariant}
-        disabled={disabled}
-        className={studioClasses("vt-studio-username-input__input", inputClassName)}
-        style={inputStyle}
-      />
-    </StudioSplitShell>
-  ),
-)
-StudioSplitFieldInput.displayName = "StudioSplitFieldInput"
-
-export const StudioUsernameInput = React.forwardRef<HTMLInputElement, StudioUsernameInputProps>(
-  (props, ref) => <StudioSplitFieldInput {...props} ref={ref} libraryComponent="StudioUsernameInput" />,
-)
-StudioUsernameInput.displayName = "StudioUsernameInput"
-
-export const StudioSplitLeftInput = React.forwardRef<HTMLInputElement, StudioUsernameInputProps>(
-  (props, ref) => <StudioSplitFieldInput {...props} ref={ref} libraryComponent="StudioSplitLeftInput" />,
-)
-StudioSplitLeftInput.displayName = "StudioSplitLeftInput"
-
-
 export const StudioSplitLeftButton = React.forwardRef<HTMLButtonElement, StudioSplitLeftButtonProps>(
   ({ icon, children, sizeVariant = "standard", iconSizeVariant = "large", ...props }, ref) => (
     <StudioButton ref={ref} sizeVariant={sizeVariant} faceLayout="split" data-split-left="true" data-vt-studio-split="left" data-icon-size-variant={iconSizeVariant} data-vt-library-component="StudioSplitLeftButton" {...props}>
@@ -1623,18 +1569,33 @@ export type StudioSquareIconButtonGroupSize = StudioControlInteractiveSize
 
 export interface StudioSquareIconButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Two or more square icon button faces, preferably StudioSquareIconButton. */
-  children: React.ReactNode
+  children?: React.ReactNode
   sizeVariant?: StudioSquareIconButtonGroupSize
   /** Accessible name for the action toolbar. */
   "aria-label"?: string
 }
 
 export const StudioSquareIconButtonGroup = React.forwardRef<HTMLDivElement, StudioSquareIconButtonGroupProps>(
-  ({ children, sizeVariant = "compact", className, "aria-label": ariaLabel = "Actions", ...rest }, ref) => {
-    const items = React.Children.toArray(children).filter(Boolean)
-    if (process.env.NODE_ENV !== "production" && items.length < 2) {
-      console.warn("[StudioSquareIconButtonGroup] expects 2 or more children; got", items.length)
-    }
+  ({ children, sizeVariant = "standard", className, "aria-label": ariaLabel = "Actions", ...rest }, ref) => {
+    const [selectedDefaultIndex, setSelectedDefaultIndex] = React.useState(-1)
+    const suppliedItems = React.Children.toArray(children).filter(Boolean)
+    const items = suppliedItems.length ? suppliedItems : [
+      { icon: <Bell />, label: "Notifications" },
+      { icon: <HeartIcon />, label: "Favorites" },
+      { icon: <Plus />, label: "Add" },
+      { icon: <RefreshCw />, label: "Refresh" },
+      { icon: <Settings2 />, label: "Settings" },
+    ].map((item, index) => (
+      <StudioSquareIconButton
+        key={item.label}
+        icon={item.icon}
+        label={item.label}
+        variant="v3"
+        selected={selectedDefaultIndex === index}
+        onSelectedChange={selected => setSelectedDefaultIndex(selected ? index : -1)}
+        sizeVariant={sizeVariant}
+      />
+    ))
 
     return (
       <div
@@ -2225,12 +2186,20 @@ export const StudioDropdown: React.FC<StudioDropdownProps> = ({
               aria-selected={option.value === currentValue}
               disabled={option.disabled}
               className="vt-studio-dropdown-option"
+              data-vt-studio-dropdown-split-option={variant === "split-left" ? "true" : undefined}
               data-active={index === activeIndex || undefined}
               data-selected={option.value === currentValue || undefined}
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => selectValue(option.value)}
             >
-              {option.label}
+              {variant === "split-left" ? (
+                <>
+                  <span className="vt-studio-dropdown-option-rail vt-studio-dropdown-option-rail--start" aria-hidden="true">
+                    {splitIcon}
+                  </span>
+                  <span className="vt-studio-dropdown-option-label">{option.label}</span>
+                </>
+              ) : option.label}
             </button>
           ))}
         </div>
@@ -2355,12 +2324,12 @@ const useStudioCounterHold = (
       };
       repeat();
     }, 380);
-  }, [adjust, direction, disabled, max, min, step, stop]);
+  }, [adjust, direction, disabled, interactionFocus, max, min, step, stop]);
   const onClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     if (suppressClick.current) {
       event.preventDefault(); event.stopPropagation(); suppressClick.current = false;
-    } else if (!disabled) adjust(direction);
-  }, [adjust, direction, disabled]);
+    } else if (!disabled) { interactionFocus?.pulse(); adjust(direction); }
+  }, [adjust, direction, disabled, interactionFocus]);
   return { isHolding, events: {
     onPointerDown, onPointerUp: stop, onPointerLeave: (event: React.PointerEvent<HTMLButtonElement>) => { if (event.pointerType === "mouse") stop(); },
     onPointerCancel: stop, onLostPointerCapture: stop, onBlur: stop, onClick,
@@ -2414,17 +2383,17 @@ export const StudioCounter: React.FC<StudioCounterProps> = ({
     const next = Number((base + direction * safeStep).toFixed(precision));
     onValueChange(Math.min(max, Math.max(min, next)));
   }, [max, min, onValueChange, safeStep]);
-  const decrement = useStudioCounterHold(-1, current, min, max, safeStep, adjust, disabled || !validBounds || current <= min);
-  const increment = useStudioCounterHold(1, current, min, max, safeStep, adjust, disabled || !validBounds || current >= max);
+  const decrement = useStudioCounterHold(-1, current, min, max, safeStep, adjust, disabled || !validBounds || current <= min, interactionFocus);
+  const increment = useStudioCounterHold(1, current, min, max, safeStep, adjust, disabled || !validBounds || current >= max, interactionFocus);
   return (
     <StudioSplitShell
       layout="double"
       sizeVariant={size}
       className={studioClasses("vt-studio-counter", interactionFocus.active && "is-interaction-focus", `is-${size}`, className)}
       railClassName="vt-studio-counter__rail"
-      leftRailContent={<button type="button" className={`vt-studio-stepper-button vt-studio-counter__button${decrement.isHolding ? " is-holding" : ""}`} data-press-holding={decrement.isHolding ? "true" : undefined} aria-label={`Decrease ${ariaLabel}`} disabled={disabled || !validBounds || current <= min} {...decrement.events} onClick={(event) => { decrement.events.onClick(event); interactionFocus.pulse(); }}><ChevronLeft aria-hidden="true" focusable="false" /></button>}
-      rightRailContent={<button type="button" className={`vt-studio-stepper-button vt-studio-counter__button${increment.isHolding ? " is-holding" : ""}`} data-press-holding={increment.isHolding ? "true" : undefined} aria-label={`Increase ${ariaLabel}`} disabled={disabled || !validBounds || current >= max} {...increment.events} onClick={(event) => { increment.events.onClick(event); interactionFocus.pulse(); }}><ChevronRight aria-hidden="true" focusable="false" /></button>}
-      shellProps={{ ...props, "data-vt-interaction-focus": interactionFocus.active ? "true" : undefined, onPointerDownCapture: interactionFocus.start, onPointerUpCapture: interactionFocus.end, onPointerCancelCapture: interactionFocus.end, role: "group", "aria-label": ariaLabel, "data-vt-studio-control-family": "counter", "data-vt-studio-control-kind": "studio-counter", "data-vt-library-component": "StudioCounter" }}
+      leftRailContent={<button type="button" className={`vt-studio-stepper-button vt-studio-counter__button${decrement.isHolding ? " is-holding" : ""}`} data-press-holding={decrement.isHolding ? "true" : undefined} aria-label={`Decrease ${ariaLabel}`} disabled={disabled || !validBounds || current <= min} {...decrement.events}><ChevronLeft aria-hidden="true" focusable="false" /></button>}
+      rightRailContent={<button type="button" className={`vt-studio-stepper-button vt-studio-counter__button${increment.isHolding ? " is-holding" : ""}`} data-press-holding={increment.isHolding ? "true" : undefined} aria-label={`Increase ${ariaLabel}`} disabled={disabled || !validBounds || current >= max} {...increment.events}><ChevronRight aria-hidden="true" focusable="false" /></button>}
+      shellProps={{ ...props, "data-vt-interaction-focus": interactionFocus.active ? "true" : undefined, role: "group", "aria-label": ariaLabel, "data-vt-studio-control-family": "counter", "data-vt-studio-control-kind": "studio-counter", "data-vt-library-component": "StudioCounter" }}
     >
       <span className="vt-studio-counter__value" data-vt-studio-counter-value aria-live="polite">{String(current)}</span>
     </StudioSplitShell>
@@ -2879,7 +2848,7 @@ export const StudioUploadFrame: React.FC<StudioUploadFrameProps> = ({
 StudioUploadFrame.displayName = "StudioUploadFrame";
 
 
-/** BEM class names are retained for compatibility; anatomy is shared with buttons and username fields. */
+/** BEM class names are retained for compatibility; split text fields reuse the same badge-owned shell anatomy. */
 export interface StudioSplitLeftBadgeProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
   icon?: React.ReactNode;
   children: React.ReactNode;
@@ -2957,7 +2926,7 @@ export interface StudioDoubleSplitSliderProps extends Omit<React.HTMLAttributes<
  */
 export const StudioDoubleSplitSlider: React.FC<StudioDoubleSplitSliderProps> = ({
   value, onValueChange, min = 0, max = 100, step = 1,
-  size = "standard", disabled = false, ariaLabel = "Slider value", leftControls = "reset",
+  size = "standard", disabled = false, ariaLabel = "Slider value", leftControls = "counter",
   className, ...props
 }) => {
   const interactionFocus = useStudioInteractionFocus();
@@ -2992,8 +2961,8 @@ export const StudioDoubleSplitSlider: React.FC<StudioDoubleSplitSliderProps> = (
       railClassName="vt-studio-double-split-slider__rail"
       leftRailContent={leftControls === "counter" ? (
         <span className="vt-studio-double-split-slider__counter" aria-label={`Adjust ${ariaLabel}`}>
-          <button type="button" className={increment.isHolding ? "is-holding" : undefined} data-press-holding={increment.isHolding ? "true" : undefined} aria-label={`Increase ${ariaLabel}`} title={`Increase ${ariaLabel}`} disabled={disabled || !validBounds || current >= max} {...increment.events} onClick={(event) => { increment.events.onClick(event); interactionFocus.pulse(); }}><ChevronUp aria-hidden="true" focusable="false" /></button>
-          <button type="button" className={decrement.isHolding ? "is-holding" : undefined} data-press-holding={decrement.isHolding ? "true" : undefined} aria-label={`Decrease ${ariaLabel}`} title={`Decrease ${ariaLabel}`} disabled={disabled || !validBounds || current <= min} {...decrement.events} onClick={(event) => { decrement.events.onClick(event); interactionFocus.pulse(); }}><ChevronDown aria-hidden="true" focusable="false" /></button>
+          <button type="button" className={`vt-studio-stepper-button${increment.isHolding ? " is-holding" : ""}`} data-press-holding={increment.isHolding ? "true" : undefined} aria-label={`Increase ${ariaLabel}`} title={`Increase ${ariaLabel}`} disabled={disabled || !validBounds || current >= max} {...increment.events}><ChevronUp aria-hidden="true" focusable="false" /></button>
+          <button type="button" className={`vt-studio-stepper-button${decrement.isHolding ? " is-holding" : ""}`} data-press-holding={decrement.isHolding ? "true" : undefined} aria-label={`Decrease ${ariaLabel}`} title={`Decrease ${ariaLabel}`} disabled={disabled || !validBounds || current <= min} {...decrement.events}><ChevronDown aria-hidden="true" focusable="false" /></button>
         </span>
       ) : (
         <button
@@ -3006,10 +2975,10 @@ export const StudioDoubleSplitSlider: React.FC<StudioDoubleSplitSliderProps> = (
         >↺</button>
       )}
       rightRailContent={<output className="vt-studio-double-split-slider__value" aria-live="off">{current}</output>}
-      shellProps={{ ...props, "data-vt-interaction-focus": interactionFocus.active ? "true" : undefined, onPointerDownCapture: interactionFocus.start, onPointerUpCapture: interactionFocus.end, onPointerCancelCapture: interactionFocus.end,
-        "data-vt-studio-slider": props["data-vt-studio-slider"] ?? "double-split",
+      shellProps={{ ...props, "data-vt-interaction-focus": interactionFocus.active ? "true" : undefined,
+        "data-vt-studio-slider": "double-split",
         "data-vt-studio-slider-left-controls": leftControls,
-        "data-vt-library-component": props["data-vt-library-component"] ?? "StudioDoubleSplitSlider",
+        "data-vt-library-component": "StudioDoubleSplitSlider",
         "data-size": size,
         "aria-disabled": disabled || !validBounds ? "true" : undefined,
       }}
@@ -3241,7 +3210,7 @@ export interface StudioSplitStepperProps extends Omit<React.HTMLAttributes<HTMLD
 }
 export type StudioSplitStepperSize = NonNullable<StudioSplitStepperProps["size"]>;
 
-/** Username-input-derived compact numeric field with a secondary action rail. */
+/** Split numeric stepper with a secondary action rail. */
 export const StudioSplitStepper: React.FC<StudioSplitStepperProps> = ({
   value, onValueChange, min = 0, max = Number.POSITIVE_INFINITY, step = 1,
   size = "standard", ariaLabel = "Value", disabled = false, className, ...props
@@ -3254,7 +3223,6 @@ export const StudioSplitStepper: React.FC<StudioSplitStepperProps> = ({
       data-vt-studio-control="true"
       data-vt-studio-control-family="stepper"
       data-vt-studio-control-kind="split-stepper"
-      data-vt-studio-username-foundation="true"
       data-size={size}
     >
       <input

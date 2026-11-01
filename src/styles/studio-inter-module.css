@@ -296,3 +296,27 @@
   max-width: none;
   margin-inline: -8px;
 }
+
+
+/* Final host-edge contract: modules touch the host edges and retain their
+ * black side strokes; adjacent modules share a single interior separator.
+ */
+[data-vt-studio-inter-host="true"] {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+  margin-inline: 0;
+}
+.vt-studio-inter-module {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  border-left: var(--vt-im-stroke, 3px) solid #000;
+  border-right: var(--vt-im-stroke, 3px) solid #000;
+}
+[data-vt-studio-inter-host="true"] > .vt-studio-inter-module + .vt-studio-inter-module,
+.vt-studio-inter-module__body > .vt-studio-inter-module + .vt-studio-inter-module {
+  border-top: 0;
+}

@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs"
 import { resolve } from "node:path"
 import { renderToStaticMarkup } from "react-dom/server"
 import { describe, expect, it } from "vitest"
-import { StudioActionButton, StudioButton, StudioTwoLineButton, StudioSplitTwoLineButton, StudioSquareIconButtonGroup, StudioTopSplitModule, StudioSplitLeftBadge, StudioSplitLeftButton, StudioSplitLeftDropdown, StudioDropdown, StudioSquareIconButton, StudioCircleIconButton, StudioPlayPauseButton, StudioUsernameInput, StudioSplitLeftInput, StudioLegendMultiDropdown, StudioSimpleDropdown, StudioTextArea, StudioTextBox, StudioTextInput, StudioWordToggle, StudioSwitch, StudioRadio, StudioSpectrumTag, StudioChoice, StudioUploadFrame, StudioSideCounter, StudioDoubleSplitSlider, StudioLeftWordCounter, StudioLeftWordSlider, normalizeStudioLeftWordIndex, STUDIO_LEFT_WORD_OPTIONS, StudioVerticalWordToggle, StudioCloseableBadge, StudioBrainStatusBadge, StudioBrainStatusIndicator, STUDIO_CONTROL_GLOBAL_RULE_EXCEPTIONS, getStudioCounterRepeatDelay } from "./StudioControls"
+import { StudioActionButton, StudioButton, StudioTwoLineButton, StudioSplitTwoLineButton, StudioSquareIconButtonGroup, StudioTopSplitModule, StudioSplitLeftBadge, StudioDoubleSplitBadge, StudioSplitLeftButton, StudioSplitLeftDropdown, StudioDropdown, StudioSquareIconButton, StudioCircleIconButton, StudioPlayPauseButton, StudioLegendMultiDropdown, StudioSimpleDropdown, StudioTextArea, StudioTextBox, StudioTextInput, StudioWordToggle, StudioSwitch, StudioRadio, StudioSpectrumTag, StudioChoice, StudioUploadFrame, StudioSideCounter, StudioDoubleSplitSlider, StudioLeftWordCounter, StudioLeftWordSlider, normalizeStudioLeftWordIndex, STUDIO_LEFT_WORD_OPTIONS, StudioVerticalWordToggle, StudioCloseableBadge, StudioBrainStatusBadge, StudioBrainStatusIndicator, STUDIO_CONTROL_GLOBAL_RULE_EXCEPTIONS, getStudioCounterRepeatDelay } from "./StudioControls"
 import { StudioHubCompletePrimitiveCatalog } from "../../components/studio-hub/StudioHubCompletePrimitiveCatalog"
 import { StudioHubConfirmedPrimitiveCatalog } from "../../components/studio-hub/StudioHubConfirmedPrimitiveCatalog"
 import { STUDIO_CONTROL_SIZE_BASE, type StudioControlSize, studioSizeTierToCssVars } from "../tokens"
@@ -17,7 +17,7 @@ const readStudioControlCss = () => [
   "studio-control-distill-overrides.css",
   "studio-control-recovery-overrides.css",
   "studio-control-word-counter.css",
-  "studio-split-text-input.css",
+  "studio-control-value-toggles.css",
 ].map((file) => readFileSync(resolve(process.cwd(), "src/styles", file), "utf8")).join("\n");
 
 const canonicalTail = (css: string) => {
@@ -66,6 +66,8 @@ describe("Studio badge single-size contract", () => {
     expect(brainLed).toContain("37.5% { transform: scale(5); opacity: 0; }");
     expect(css).toContain("background: #fff;");
     expect(css).toContain("prefers-reduced-motion: reduce");
+    expect(css).toContain(".vt-studio-upload-frame:has(.vt-studio-upload-frame__input:focus-visible)");
+    expect(css).toContain("@media (max-width: 460px)");
   });
 });
 
@@ -79,19 +81,21 @@ describe("canonical Studio upload frame", () => {
     expect(html).toContain('aria-label="Upload media"');
     expect(html).toContain('class="vt-studio-upload-frame__layers"');
     expect(html).toContain('class="vt-studio-upload-frame__layer vt-studio-upload-frame__layer--core"');
-    expect(html).toContain('class="vt-studio-upload-frame__file-bar"');
-    expect(html).toContain('class="vt-studio-upload-frame__file-action"');
-    expect(html).toContain('class="vt-studio-upload-frame__file-name"');
-    expect(html).toContain('class="vt-studio-upload-frame__file-kind"');
+    expect(html).toContain('class="vt-studio-upload-frame__inset"');
+    expect(html).toContain('class="vt-studio-upload-frame__layers"');
+    expect(html).toContain('class="vt-studio-upload-frame__center"');
+    expect(html).toContain('class="vt-studio-upload-frame__icon"');
+    expect(html).toContain('class="vt-studio-upload-frame__label"');
+    expect((html.match(/vt-studio-upload-frame__layer/g) || []).length).toBeGreaterThanOrEqual(10);
     expect(html).not.toContain('vt-studio-upload-frame__badge-rail');
     expect(html).not.toContain('data-vt-studio-split="double"');
     const css = readStudioControlCss();
-    expect(css).toContain('.vt-studio-upload-frame::before');
-    expect(css).toContain('mask-composite: exclude');
-    expect(css).toContain('inset: calc(2 * var(--vt-studio-upload-frame-stroke))');
-    expect(css).toContain('border-radius: max(0px, calc(var(--vt-studio-upload-frame-radius) - 2 * var(--vt-studio-upload-frame-stroke) - var(--vt-upload-primary-stroke) - var(--vt-upload-secondary-stroke)))');
-    expect(html).toContain("Drag or drop");
-    expect(html).toContain("Image / video here · or click to upload");
+    expect(css).toContain('.vt-studio-upload-frame__inset::before');
+    expect(css).toContain('.vt-studio-upload-frame__inset::after');
+    expect(css).toContain('border: 4px solid var(--vt-studio-upload-primary)');
+    expect(css).toContain('border: 2px solid var(--vt-studio-upload-secondary)');
+    expect(css).toContain('aspect-ratio: 16 / 9');
+    expect(html).toContain("Drop or choose file");
     expect(html).not.toContain("FA618A");
     expect(html).not.toContain("4EE4BE");
     expect(STUDIO_CONTROL_GLOBAL_RULE_EXCEPTIONS.uploadFrame.owner).toBe("StudioUploadFrame");
@@ -103,14 +107,6 @@ describe("canonical Studio upload frame", () => {
     expect(html).toContain('multiple=""');
     expect(html).toContain('accept="image/*,video/*"');
     expect(html).toContain('aria-label="Vault asset import"');
-  });
-
-  it("renders the canonical split-left input with search icon rail and native input attributes", () => {
-    const html = renderToStaticMarkup(<StudioSplitLeftInput icon={<span aria-hidden="true">⌕</span>} value="thumbnail" placeholder="Search assets…" aria-label="Search Vault assets" />);
-    expect(html).toContain('data-vt-studio-username-input="true"');
-    expect(html).toContain('aria-label="Search Vault assets"');
-    expect(html).toContain('placeholder="Search assets…"');
-    expect(html).toContain('value="thumbnail"');
   });
 
   it("supports explicit single-select semantics in the shared legend dropdown", () => {
@@ -125,11 +121,10 @@ describe("canonical Studio upload frame", () => {
   it("exposes compact sizing and uses the shared primary/secondary pair rather than fixed colors", () => {
     const html = renderToStaticMarkup(<StudioUploadFrame sizeVariant="compact" accept="image/*" aria-label="Compact upload" />);
     const css = readFileSync(resolve(process.cwd(), "src/styles/studio-control-system.css"), "utf8");
-    expect(html).toContain('data-size="standard"');
+    expect(html).toContain('data-size="compact"');
     expect(html).toContain('accept="image/*"');
-    expect(html).toContain('data-vt-studio-split="double"');
-    expect(html).toContain('class="vt-studio-upload-frame__badge-rail vt-studio-upload-frame__badge-rail--left"');
-    expect(html).toContain('class="vt-studio-upload-frame__badge-rail vt-studio-upload-frame__badge-rail--right"');
+    expect(html).not.toContain('data-vt-studio-split="double"');
+    expect(html).not.toContain('vt-studio-upload-frame__badge-rail');
     expect(css).toContain(".vt-studio-upload-frame");
     expect(css).toContain("var(--pair-a");
     expect(css).toContain("var(--pair-b");
@@ -137,38 +132,30 @@ describe("canonical Studio upload frame", () => {
     expect(css).toContain(".vt-studio-upload-frame.is-drag");
     expect(css).toContain(".vt-studio-upload-frame.has-img");
     expect(css).toContain(".vt-studio-upload-frame__icon::before");
-    expect(css).toContain("--vt-upload-circle-border: 4px");
-    expect(css).toContain("--vt-upload-primary-stroke: 5px");
-    expect(css).toContain("--vt-upload-secondary-stroke: 3px");
-    expect(css).toContain("border: var(--vt-upload-primary-stroke) solid var(--vt-studio-upload-primary)");
-    expect(css).toContain("border: var(--vt-upload-secondary-stroke) solid var(--vt-studio-upload-secondary)");
-    expect(css).toContain(".vt-studio-upload-frame__inset::before");
-    expect(css).toContain(".vt-studio-upload-frame__inset::after");
+    expect(css).toContain(".vt-studio-upload-frame[data-size=\"compact\"]");
+    expect(css).toContain("--vt-studio-upload-step: clamp(3px, 1cqw, 4px)");
+    expect(css).toContain("border: 4px solid var(--vt-studio-upload-primary)");
+    expect(css).toContain("border: 2px solid var(--vt-studio-upload-secondary)");
     const uploadFrameBlock = css.slice(css.indexOf(".vt-studio-upload-frame {"), css.indexOf(".vt-studio-upload-frame[data-size=\"compact\"]"));
     expect(uploadFrameBlock).toContain("aspect-ratio: 16 / 9;");
     expect(css).not.toMatch(/\.vt-studio-upload-frame\s*\{\s*aspect-ratio:\s*(?!16 \/ 9)/);
-    expect(css).toContain("font-size: 12px");
-    expect(css).toContain("height: 28px");
+    expect(css).toContain("font-size: var(--vt-studio-28-font-size, 24px)");
     expect(css).toContain("font-weight: 1000");
     expect(css).toContain("letter-spacing: -.02em");
-    expect(css).toContain("border-radius: 4px;");
+    expect(css).toContain("border-radius: 8px;");
     expect(css).toContain(".vt-studio-upload-frame__icon {");
     expect(css).toContain("overflow: visible");
     expect(css).toContain(".vt-studio-upload-frame__icon::before");
     expect(css).toContain(".vt-studio-upload-frame__icon::after");
     expect(css).toContain(".vt-studio-upload-frame.has-img .vt-studio-upload-frame__icon {");
-    expect(css).toContain("width: 48cqw");
-    expect(css).toContain("--vt-studio-upload-quarter-stroke: calc(var(--vt-studio-upload-frame-stroke) / 4)");
-    expect(css).toContain("--vt-studio-upload-speed: 2");
-    expect(css).toContain("animation: vt-studio-upload-click-pulse 1s ease-in-out both");
     const legacyCatalog = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubCompletePrimitiveCatalog.tsx"), "utf8");
     const migrationCatalog = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubPrimitiveMigrationCatalog.tsx"), "utf8");
     expect(legacyCatalog).toContain('if (name === "Upload Frame") return');
     expect(legacyCatalog).toContain("<StudioUploadFrame");
     expect(legacyCatalog).not.toContain("SubToolboxFileTarget");
-    expect(legacyCatalog).toContain("StudioSplitLeftInput");
+    expect(legacyCatalog).not.toContain("StudioSplitLeftInput");
     expect(migrationCatalog).toContain("<StudioUploadFrame");
-    expect(migrationCatalog).toContain("StudioSplitLeftInput");
+    expect(migrationCatalog).not.toContain("StudioSplitLeftInput");
     expect(migrationCatalog).not.toContain("SubToolboxFileTarget");
   });
 });
@@ -841,43 +828,6 @@ describe("Studio Circle Icon Button", () => {
   })
 })
 
-describe("Studio Username Split-Left Input", () => {
-  it("composes the canonical Studio text input with a split icon rail", () => {
-    const html = renderToStaticMarkup(<StudioUsernameInput icon={<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /></svg>} aria-label="Username" placeholder="Username" />)
-    expect(html).toContain('data-vt-studio-username-input="true"')
-    expect(html).toContain('data-vt-studio-username-rail="true"')
-    expect(html).toContain('data-icon-size-variant="large"')
-    expect(html).toContain('data-vt-studio-field-kind="text-input"')
-    expect(html).toContain('aria-label="Username"')
-    expect(html).not.toContain('data-vt-studio-button="true"')
-    expect(renderToStaticMarkup(<StudioUsernameInput icon={<span>U</span>} sizeVariant="compact" aria-label="Compact username" />)).toContain('data-size="compact"')
-  })
-
-  it("uses the primary inline stroke at the selected border width without important overrides", () => {
-    const css = readStudioControlCss()
-    const start = css.indexOf('.vt-studio-username-input input.vt-studio-username-input__input[data-vt-studio-control="true"] {')
-    const end = css.indexOf('.vt-studio-username-input[data-disabled="true"]', start)
-    const fieldRules = css.slice(start, end)
-    expect(fieldRules).toContain("-webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) var(--vt-field-primary)")
-    expect(fieldRules).toContain("-webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) var(--vt-field-primary)")
-    expect(fieldRules).toContain("-webkit-text-stroke: var(--vt-studio-control-text-stroke, 1px) #8b8b8b")
-    expect(fieldRules).not.toContain("!important")
-  })
-
-  it("keeps the composite outline and inset strokes on the wrapper without a button shadow or seam", () => {
-    const css = readStudioControlCss()
-    expect(css).toContain('.vt-studio-username-input:focus-within')
-    expect(css).not.toContain('inset 0 var(--vt-studio-control-stroke) 0 0 var(--vt-field-primary)')
-    expect(css).not.toContain('inset calc(0px - var(--vt-studio-control-stroke)) 0 0 0 var(--vt-field-primary)')
-    expect(css).toContain('input.vt-studio-username-input__input[data-vt-studio-control="true"]:is(:focus, :focus-visible)')
-    expect(css).toContain('box-shadow: none !important;')
-    expect(css).toContain('button[data-vt-studio-circle-icon-button="true"] > [data-vt-studio-button-face]')
-    expect(css).toContain('.vt-studio-username-input[data-size="standard"] {\n  --vt-studio-control-icon-size: 38px;\n  --vt-studio-control-icon-stroke: 1.9;')
-    expect(css).toContain('.vt-studio-username-input[data-size="compact"] {\n  --vt-studio-control-icon-size: 24px;\n  --vt-studio-control-icon-stroke: 2;')
-  })
-})
-
-
 describe("confirmed Studio primitive catalog ownership", () => {
   it("registers the simple dropdown and split stepper from the canonical Studio Controls module", () => {
     const catalog = readFileSync(resolve(process.cwd(), "src/components/studio-hub/StudioHubConfirmedPrimitiveCatalog.tsx"), "utf8")
@@ -1007,7 +957,9 @@ describe("Studio counter divider alignment and slider counter hold", () => {
     expect(html).toContain('data-vt-studio-slider-left-controls="counter"');
     expect(html).toContain('aria-label="Increase Level"');
     expect(html).toContain('aria-label="Decrease Level"');
-    expect(css).toContain('.vt-studio-double-split-slider.is-counter-controls .vt-studio-double-split-slider__counter::after');
+    expect(css).not.toContain('.vt-studio-double-split-slider.is-counter-controls .vt-studio-double-split-slider__counter::after');
+    expect(css).toContain('.vt-studio-double-split-slider.is-counter-controls .vt-studio-double-split-slider__counter > button');
+    expect(css).toContain('background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));');
     expect(css).toContain('.vt-studio-double-split-slider.is-counter-controls .vt-studio-double-split-slider__counter > button.is-holding svg');
   });
 });
@@ -1282,6 +1234,7 @@ describe("StudioSquareIconButtonGroup joined rail", () => {
     expect(css).toContain(".vt-studio-square-icon-button-group");
     expect(css).toContain("border-right: var(--vt-icon-group-stroke) solid #000 !important;");
     expect(css).toContain("border-radius: 0 !important;");
+    expect(css).toContain("overflow: visible;");
   });
 });
 
@@ -1365,9 +1318,11 @@ describe("Studio Controls regression recovery contracts", () => {
 
   it("pins split rails to square inner dimensions and restores full-width intermodules", () => {
     const split = readFileSync("src/styles/studio-control-split.css", "utf8");
-    expect(split).toContain('height: var(--vt-studio-split-rail-size, calc(var(--vt-studio-control-height');
-    expect(split).toContain('aspect-ratio: 1 / 1;');
-    expect(split).toContain('calc(var(--vt-top-split-size, 44px) - 2 * var(--vt-top-split-stroke, 3px))');
+    expect(split).toContain('grid-template-columns: auto minmax(0, 1fr);');
+    expect(split).toContain('width: var(--vt-studio-control-height, 44px);');
+    expect(split).toContain('height: 100%;');
+    expect(split).not.toContain('--vt-studio-split-rail-size');
+    expect(split).toContain('width: var(--vt-top-split-size, 44px);');
     expect(split).toContain('.vt-studio-inter-module');
     expect(split).toContain('grid-column: 1 / -1;');
   });
@@ -1455,42 +1410,61 @@ describe("Studio left word counter and word slider", () => {
 });
 
 
-describe("StudioSplitTextInput transparent-panel composition", () => {
-  it("keeps the split badge shell and places a size-aware text input inside it", () => {
-    const html = renderToStaticMarkup(
-      <StudioSplitTextInput split="left" sizeVariant="standard" leftIcon={<span>SEARCH</span>} aria-label="Search" />,
-    );
-    expect(html).toContain('class="vt-studio-split-shell vt-studio-split-text-input"');
-    expect(html).toContain('data-vt-studio-split="left"');
-    expect(html).toContain('class="vt-studio-split-shell__rail"');
-    expect(html).toContain('class="vt-studio-split-text-input__field"');
-    expect(html).toContain('aria-label="Search"');
-    expect(html).toContain('data-size="standard"');
+describe("StudioSplitTextInput badge-owned composition", () => {
+  it("composes one split badge shell with the native StudioTextInput for left, right, and double layouts", () => {
+    const left = renderToStaticMarkup(<StudioSplitTextInput split="left" sizeVariant="standard" leftIcon={<span>SEARCH</span>} aria-label="Search" />);
+    const right = renderToStaticMarkup(<StudioSplitTextInput split="right" sizeVariant="standard" rightIcon={<span>FILTER</span>} aria-label="Filter" />);
+    const double = renderToStaticMarkup(<StudioSplitTextInput split="double" sizeVariant="standard" leftIcon={<span>SEARCH</span>} rightIcon={<span>FILTER</span>} aria-label="Search and filter" />);
+    expect(left).toContain('class="vt-studio-split-text-input"');
+    expect(left).toContain('data-vt-studio-split="left"');
+    expect(left).toContain('data-vt-library-component="StudioSplitLeftBadge"');
+    expect(right).toContain('data-vt-studio-split="right"');
+    expect(right).toContain('data-vt-library-component="StudioSplitRightBadge"');
+    expect(double).toContain('data-vt-studio-split="double"');
+    expect(double).toContain('data-vt-library-component="StudioDoubleSplitBadge"');
+    expect(double).toContain('class="vt-studio-text-input');
+    expect(double).toContain('aria-label="Search and filter"');
   });
 
-  it("uses a transparent split panel and an inset primary-border input without a second focus outline", () => {
-    const css = readStudioControlCss();
-    const shellStart = css.lastIndexOf(".vt-studio-split-shell.vt-studio-split-text-input {");
-    const fieldStart = css.lastIndexOf(".vt-studio-split-text-input__field {");
-    const focusStart = css.lastIndexOf(".vt-studio-split-text-input:focus-within");
-    expect(shellStart).toBeGreaterThanOrEqual(0);
-    expect(fieldStart).toBeGreaterThan(shellStart);
-    expect(focusStart).toBeGreaterThan(fieldStart);
-    const shell = css.slice(shellStart, fieldStart);
-    const field = css.slice(fieldStart, focusStart);
-    expect(shell).toContain("background: transparent");
-    expect(field).toContain("border: var(--vt-studio-control-stroke, 3px) solid var(--vt-field-primary");
-    expect(field).toContain("height: calc(var(--vt-studio-control-height, 44px) - 3 * var(--vt-studio-control-stroke, 3px))");
-    expect(field).toContain("align-self: center");
-    const rail = css.slice(css.indexOf(".vt-studio-split-text-input > .vt-studio-split-shell__rail"), css.indexOf(".vt-studio-split-text-input__field"));
-    expect(rail).toContain("place-items: center");
-    expect(rail).toContain("flex: 0 0 calc(var(--vt-studio-control-height, 44px) - 2 * var(--vt-studio-control-stroke, 3px))");
-    expect(rail).toContain("height: 100%");
-    expect(field).toContain("outline: none");
-    expect(field).toContain("background: var(--vt-field-fill-rest, transparent)");
-    expect(field).not.toContain("border: 0 !important");
-    expect(field).toContain("background-image: none !important");
-    expect(field).not.toContain("linear-gradient(");
-    expect(css.slice(focusStart, focusStart + 1000)).toContain("outline: none");
+  it("uses one shell perimeter and divider, secondary square rails, and a primary inset input stroke", () => {
+    const css = readFileSync(resolve(process.cwd(), "src/studio-ui/primitives/studio-split-text-input.css"), "utf8");
+    expect(css).toContain('grid-template-columns: var(--vt-studio-control-height, 44px) minmax(0, 1fr)');
+    expect(css).toContain('background: var(--vt-studio-control-secondary');
+    expect(css).toContain('box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary)');
+    expect(css).toContain('border: 0;');
+    expect(css).not.toContain('!important');
+    expect(css).not.toContain('border: var(--vt-studio-control-stroke, 3px) solid var(--vt-split-field-primary)');
+  });
+
+  it("supports the complete five-tier size contract", () => {
+    for (const size of ["supreme", "standard", "compact", "mini", "micro"] as const) {
+      const html = renderToStaticMarkup(<StudioSplitTextInput split="double" sizeVariant={size} aria-label={size + " split input"} />);
+      expect(html).toContain('data-size="' + size + '"');
+    }
+  });
+});
+
+describe("confirmed split badge rails and double-side toggle shell", () => {
+  it("renders both icon rails for split-left and double-split badges", () => {
+    const left = renderToStaticMarkup(<StudioSplitLeftBadge icon={<span>LEFT_ICON</span>}>READY</StudioSplitLeftBadge>);
+    const double = renderToStaticMarkup(<StudioDoubleSplitBadge leftIcon={<span>LEFT_ICON</span>} rightIcon={<span>RIGHT_ICON</span>}>READY</StudioDoubleSplitBadge>);
+    expect(left).toContain("LEFT_ICON");
+    expect(double).toContain("LEFT_ICON");
+    expect(double).toContain("RIGHT_ICON");
+    expect((double.match(/data-vt-studio-split-rail/g) ?? []).length).toBe(2);
+  });
+
+  it("keeps nested double-side shells borderless and leaves one outer perimeter", () => {
+    const css = readFileSync(resolve(process.cwd(), "src/styles/studio-control-value-toggles.css"), "utf8");
+    expect(css).toContain(".vt-studio-value-toggle--double > .vt-studio-value-toggle__double-side > .vt-studio-split-shell");
+    expect(css).toContain("border: 0;");
+    expect(css).toContain("box-shadow: none;");
+  });
+
+  it("keeps confirmed counter and slider family specimens in a single column", () => {
+    const css = readFileSync(resolve(process.cwd(), "src/components/studio-hub/studio-hub-primitive-catalogs.css"), "utf8");
+    expect(css).toContain(".vt-confirmed-counter-pair,");
+    expect(css).toContain("grid-template-columns: minmax(0, 1fr);");
+    expect(css).not.toContain("@media (min-width: 720px) {\n  .vt-confirmed-slider-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }");
   });
 });
