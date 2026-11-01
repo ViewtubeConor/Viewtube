@@ -198,3 +198,21 @@ html body .vt-studio-split-text-input input.vt-studio-text-input[data-vt-studio-
   border: 0;
   box-shadow: inset 0 0 0 var(--vt-studio-control-stroke, 3px) var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a, #36e0f6)));
 }
+\n
+/* Standard and Compact nested inputs can receive their own control-size
+   declarations from the field layer. Rebind the inset width at the split
+   shell boundary so the shell's selected tier remains authoritative. */
+html body .vt-studio-split-text-input > [data-vt-studio-control="true"][data-size="standard"] input.vt-studio-text-input[data-vt-studio-control="true"],
+html body .vt-studio-split-text-input > [data-vt-studio-control="true"][data-size="standard"] input.vt-studio-text-input[data-vt-studio-control="true"][data-size] {
+  --vt-studio-control-stroke: var(--vt-studio-standard-stroke, 3px);
+  box-shadow: inset 0 0 0 var(--vt-studio-standard-stroke, 3px) var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a, #36e0f6)));
+}
+html body .vt-studio-split-text-input > [data-vt-studio-control="true"][data-size="compact"] input.vt-studio-text-input[data-vt-studio-control="true"],
+html body .vt-studio-split-text-input > [data-vt-studio-control="true"][data-size="compact"] input.vt-studio-text-input[data-vt-studio-control="true"][data-size] {
+  --vt-studio-control-stroke: var(--vt-studio-compact-stroke, 2px);
+  box-shadow: inset 0 0 0 var(--vt-studio-compact-stroke, 2px) var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a, #36e0f6)));
+}
+html body .vt-studio-split-text-input > [data-vt-studio-control="true"][data-size="standard"]:focus-within input.vt-studio-text-input[data-vt-studio-control="true"],
+html body .vt-studio-split-text-input > [data-vt-studio-control="true"][data-size="compact"]:focus-within input.vt-studio-text-input[data-vt-studio-control="true"] {
+  box-shadow: inset 0 0 0 var(--vt-studio-control-stroke) var(--vt-split-field-primary, var(--vt-field-primary, var(--pair-a, #36e0f6)));
+}
