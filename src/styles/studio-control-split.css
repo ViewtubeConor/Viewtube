@@ -401,9 +401,8 @@ button[data-vt-studio-play-pause="true"] [data-vt-studio-split-rail] {
 /* Double-split slider: preserve global pair roles and keep the range track clear
    of both vertical rail dividers. */
 .vt-studio-double-split-slider > [data-vt-studio-split-field] {
-  padding-inline: calc(var(--vt-studio-control-stroke, 3px) * 2);
-  background: var(--vt-studio-control-primary, var(--pair-a, #36e0f6));
-}
-.vt-studio-double-split-slider .vt-studio-double-split-slider__rail {
-  background: var(--vt-studio-control-secondary, var(--pair-b, #ff7f6b));
+  padding-inline: max(
+    calc(var(--vt-studio-control-stroke, 3px) * 2),
+    calc(var(--vt-studio-control-height, 44px) * .12)
+  );
 }
