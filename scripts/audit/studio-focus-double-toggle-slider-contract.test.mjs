@@ -33,7 +33,12 @@ test("split text input uses one continuous primary inset stroke at every size", 
   assert.doesNotMatch(splitInput, /border-(?:top|bottom):\s*var\(--vt-studio-control-stroke/);
 });
 
-test("slider track retains tier-aware clearance from both vertical dividers", () => {
+
+test("standard and compact split text inputs bind their inline stroke to their own size tier", () => {
+  assert.match(splitInput, /\.vt-studio-split-text-input > \[data-vt-studio-control="true"\]\[data-size="standard"\] input[\s\S]*?--vt-studio-control-stroke:\s*var\(--vt-studio-standard-stroke/);
+  assert.match(splitInput, /\.vt-studio-split-text-input > \[data-vt-studio-control="true"\]\[data-size="compact"\] input[\s\S]*?--vt-studio-control-stroke:\s*var\(--vt-studio-compact-stroke/);
+});
+\ntest("slider track retains tier-aware clearance from both vertical dividers", () => {
   assert.match(splitStyles, /padding-inline:\s*max\([\s\S]*?calc\(var\(--vt-studio-control-stroke, 3px\) \* 2\)[\s\S]*?calc\(var\(--vt-studio-control-height, 44px\) \* \.12\)/);
 });
 
