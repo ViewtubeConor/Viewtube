@@ -28,7 +28,7 @@ textarea[data-vt-studio-control="true"]:focus-visible,
   box-sizing: border-box;
   border: var(--vt-studio-control-stroke, 3px) solid #000;
   border-radius: var(--vt-studio-control-radius, 6px);
-  background: color-mix(in srgb, var(--vt-field-primary) var(--vt-studio-control-default-fill-opacity, 50%), white);
+  background: var(--vt-field-fill-rest, color-mix(in srgb, white 50%, var(--vt-field-primary) 50%));
   color: var(--vt-field-primary);
   -webkit-text-fill-color: var(--vt-field-primary);
   caret-color: var(--vt-field-primary);
@@ -178,7 +178,7 @@ html body [data-vt-studio-control="true"] textarea {
 }
 html body textarea[data-vt-studio-control="true"]:is(:focus, :focus-visible),
 html body [data-vt-studio-control="true"] textarea:is(:focus, :focus-visible) {
-  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) 15%, white));
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, white 85%, var(--vt-field-primary, var(--vt-studio-control-accent, var(--pair-a, #36e0f6))) 15%));
   color: var(--vt-field-text-focus, #000);
   -webkit-text-fill-color: var(--vt-field-text-focus, #000);
   -webkit-text-stroke-color: var(--vt-field-text-stroke-focus, #000);
@@ -195,7 +195,7 @@ html body [data-vt-studio-control="true"].vt-studio-text-box {
 }
 html body .vt-studio-text-box[data-vt-studio-control="true"]:is(:focus, :focus-visible),
 html body [data-vt-studio-control="true"].vt-studio-text-box:is(:focus, :focus-visible) {
-  background-color: var(--vt-field-fill-focus, color-mix(in srgb, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%, white));
+  background-color: var(--vt-field-fill-focus, color-mix(in srgb, white 85%, var(--vt-field-primary, var(--pair-a, #36e0f6)) 15%));
   color: var(--vt-field-text-focus, #000);
   -webkit-text-fill-color: var(--vt-field-text-focus, #000);
   -webkit-text-stroke-color: var(--vt-field-text-stroke-focus, #000);
